@@ -1,0 +1,911 @@
+
+<!-- saved from url=(0113)https://cdn.shopify.com/s/files/1/0657/0013/5154/t/2/assets/unsen_blog2.ecom.html?v=63033122896507021221675138424 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><template></template>
+  <script>
+  export default {
+    name: "Unsen blog post2",
+    props: {
+        data: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    },
+    data () {
+        return {
+            editing: false,
+            is: 'heading',
+            editingValue: ''
+        };
+    },
+    computed: {
+        settings () {
+            return [
+                {
+                    group_title: "Heading",
+                    selector: " .testimonial-heading",
+                    params:[
+                        {
+                            name: 'design_heading',
+                            type: 'dropdown',
+                            label: 'Heading style',
+                            value:1,
+                            options: {
+                                default: false,
+                                values: {
+                                    '1': 'Design 1',
+                                    '2': 'Design 2',
+                                    '3': 'Design 3',
+                                    '4': 'Design 4',
+                                    '5': 'Design 5',
+                                    '6': 'Design 6'
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Center align the heading',
+                            name: 'heading_center',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'text',
+                            label: 'Heading',
+                            name: 'top_heading',
+                            value: "Blog2",
+                            options: {
+                                toolbar: true,
+                                height: 80
+                            }
+                        },
+                        {
+                            type: 'textarea',
+                            label: 'Description',
+                            name: 'top_subheading',
+                            options: {
+                                toolbar: true,
+                                height: 80
+                            }
+                        },
+                        {
+                            type: 'number',
+                            label: 'Bottom space',
+                            name: 'tophead_mb',
+                            description: 'The spacing is between the heading and the content',
+                            value:'30px',
+                            options: {
+                                responsive:true,
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,
+                                        step:1
+                                    }
+                                },
+                               
+                            } 
+                        }
+                    ]
+                },
+                {
+                    group_title: "Genaral options",
+                    params:[
+                        {
+                            type: 'picker',
+                            label: 'Blog',
+                            name: 'blog',
+                            options: {
+                                type: 'blog'
+                            }
+                            
+                        },
+                        {
+                            type: "number",
+                            label: "Number of articles to show",
+                            name: "limit",
+                            value:4,
+                            options: 
+                            {
+                                min: 3,
+                                max: 6,
+                                step: 1
+                            }
+                        },
+                        {
+                            name: 'show_blog_title',
+                            type: 'dropdown',
+                            label: 'Show blog title',
+                            description: "From tags contains 'blog_': will show tags on article current contains 'blog_'",
+                            value: 'disable',
+                            options: {
+                                default: false,
+                                values: {
+                                    'disable': 'Disable',
+                                    'blog_current': 'From blog current',
+                                    'blog_tags': 'From tags contains \'blog_'
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show short content',
+                            name: 'show_content',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show tags',
+                            name: 'show_tags',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show author',
+                            name: 'show_author',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show comment',
+                            name: 'show_comment',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show readmore',
+                            name: 'show_readmore',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Show date',
+                            name: 'show_date',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: 'date',
+                            type: 'dropdown',
+                            label: 'Date format',
+                            description: "Different format options display for various languages.",
+                            value: '%b %d',
+                            options: {
+                                default: false,
+                                values: {
+                                    'abbreviated_date':'Apr 19, 1994',
+                                    'basic':'4/19/1994',
+                                    'date':'April 19, 1994',
+                                    '%b %d':'Apr 19'
+                                }
+                            }
+                        },
+                        {
+                            name: 'content_align',
+                            type: 'dropdown',
+                            label: 'Content align',
+                            value: 't4s-text-start',
+                            options: {
+                                default: false,
+                                values: {
+                                    't4s-text-start':'Default',
+                                    't4s-text-center':'Center'
+                                }
+                            }
+                        },
+                        {
+                            name: 'img_effect',
+                            type: 'dropdown',
+                            label: 'Image hover effect',
+                            value: 'none',
+                            options: {
+                                default: false,
+                                values: {
+                                    'none':'None',
+                                    'zoom':'Zoom in',
+                                    'rotate':'Rotate',
+                                    'translateToTop':'Move to top',
+                                    'translateToRight':'Move to right',
+                                    'translateToBottom':'Move to bottom',
+                                    'translateToLeft':'Move to left',
+                                }
+                            }
+                        },
+                        {
+                            name: 'b_effect',
+                            type: 'dropdown',
+                            label: 'Blog effect when hover',
+                            value: 'none',
+                            options: {
+                                default: false,
+                                values: {
+                                    'none':'None',
+                                    'border-run':'Border run',
+                                    'pervasive-circle':'Pervasive circle',
+                                    'plus-zoom-overlay':'Plus zoom overlay',
+                                    'dark-overlay':'Dark overlay',
+                                    'light-overlay':'Light overlay'
+                                }
+                            }
+                        },
+                        {
+                            name: 'image_ratio',
+                            type: 'dropdown',
+                            label: 'Image ratio',
+                            value: 'ratio4_3',
+                            options: {
+                                default: false,
+                                values: {
+                                    'ratioadapt': "Adapt to image",
+                                    'ratio2_1': "2:1",
+                                    'ratio16_9': "16:9",
+                                    'ratio8_5': "8:5",
+                                    'ratio3_2': "3:2",
+                                    'ratio4_3': "4:3",
+                                    'rationt': "Ratio ASOS",
+                                    'ratio1_1': "1:1",
+                                    'ratio2_3': "2:3",
+                                    'ratio1_2': "1:2"
+                                }
+                            }
+                        },
+                        {
+                            name: "image_size",
+                            type: "dropdown",
+                            label: "Image size",
+                            value: 'contain',
+                            options: {
+                                default: false,
+                                values: {
+                                    'cover': "Full",
+                                    'contain': "Auto",
+                                },
+                                visible: {
+                                    condition: (data) => data.image_ratio != "ratioadapt"
+                                }
+                            }
+                        },
+                        {
+                            name: "image_position",
+                            type: "dropdown",
+                            label: "Image position",
+                            value: '8',
+                            description: "The first value is the horizontal position and the second value is the vertical.",
+                            options: {
+                                default: false,
+                                values: {
+                                    '1': "Left top",
+                                    '2': "Left center",
+                                    '3': "Left bottom",
+                                    '4': "Right top",
+                                    '5': "Right center",
+                                    '6': "Right bottom",
+                                    '7': "Center top",
+                                    '8': "Center center",
+                                    '9': "Center bottom"
+                                },
+                                visible: {
+                                    condition: (data) => data.image_ratio != "ratioadapt"
+                                }
+                            }
+                        },
+                        {
+                            type: 'paragraph',
+                            content:'+ Layout'
+                        },
+                        {
+                            label: "Layout",
+                            name: "layout",
+                            type: "popup",
+                            value: 't4s-container-wrap',
+                            options: {
+                                preview: "title",
+                                type: "dropdown",
+                                values: {
+                                    't4s-se-container': "Container",
+                                    't4s-container-wrap': "Wrapped container",
+                                    't4s-container-fluid': "Full width"
+                                },
+                                default: false,
+                            }
+                        }
+                    ]
+                }
+            ];
+        },
+  
+        liquids() {
+            const se_stts = this?.data?.settings
+            const se_style = this?.data?.style?.color
+            //console.log(se_stts)
+            // console.log(se_style)
+            const top_heading = se_stts?.top_heading || ''
+            const top_subheading =  se_stts?.top_subheading || ''
+            const design_heading = se_stts?.design_heading || 1
+            const heading_center = se_stts?.heading_center 
+            const get_height = true
+            const heading = `
+                ${(top_heading.length > 0 || top_subheading.length >0) ? `                    
+                    {{ 'top-head.css' | asset_url | stylesheet_tag }}
+                    <div class="t4s-top-heading t4s_des_title_${design_heading} ${heading_center ? ` t4s-text-center` :''} ${top_subheading ? ` t4s-has-section-des` :''}" ${get_height ? 'data-get-height' :''} style="--tophead-mb: ${se_stts?.tophead_mb};--tophead-mb-tb: ${se_stts?.tophead_mb__tablet};--tophead-mb-mb: ${se_stts?.tophead_mb__mobile};">
+                        ${top_heading.length >0 ? `<h3 class="t4s-section-title t4s-title"><span>${top_heading}</span></h3>`:''}
+                        ${design_heading == "3"?
+                            `<div class="t4s-heading-char t4s-d-flex ${heading_center ? `t4s-justify-content-center` :''}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="118 82.1 385.5 42">
+                                    <path class="st0" d="M483.1,100.9c-4.1,8.2-7,13.2-11.7,13.2c-4.6,0-7.5-5-11.7-13.3c-4.2-8.3-9.5-18.7-20.6-18.7  c-11.1,0-16.4,10.4-20.6,18.8c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.4,10.4-20.6,18.8  c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.5,13.2  c-4.6,0-7.4-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8v10c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.5,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.5-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8  c11.1,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8s16.3-10.4,20.6-18.8  c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.5,18.8,20.6,18.8c11.2,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.7-13.2  v-10C492.5,82.1,487.3,92.5,483.1,100.9z"/>
+                                </svg>
+                            </div>`
+                        :''}
+                        ${top_subheading? `<span class="t4s-section-des t4s-subtitle">${top_subheading}`:''}
+                    </div>`
+                : ''}
+            `
+          return {
+              'blog2': {
+                  code:`
+                    {{ 'section.css' | asset_url | stylesheet_tag }}
+                    {{ 'blog2.css' | asset_url | stylesheet_tag }}
+                    {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                    <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                    {%- liquid
+                        assign sid = ${this.data.id}
+                        assign stt_layout = ${se_stts?.layout}
+                        if stt_layout == 't4s-se-container' 
+                            assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+                        elsif stt_layout == 't4s-container-wrap'
+                            assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+                        else
+                            assign html_layout = '__' | split: '__'
+                        endif
+                        assign blog = blogs['${se_stts.blog?.value}']
+                        assign blog_url = blog.url
+                        assign blog_title = blog.title
+                        assign limit = ${se_stts?.limit} | minus: 1
+                        assign by_txt = 'blogs.article.by' | t
+                        assign on_txt = 'blogs.article.on' | t
+                        assign readmore_txt = 'blogs.article.read_more' | t
+                        assign date = '${se_stts?.date}'
+                        assign b_effect = ${se_stts?.b_effect}
+                        assign img_effect = ${se_stts?.img_effect}
+                        assign show_tags = ${se_stts?.show_tags}
+                        assign show_content = ${se_stts?.show_content}
+                        assign show_author = ${se_stts?.show_author}
+                        assign show_comment = ${se_stts?.show_comment}
+                        assign show_date = ${se_stts?.show_date}
+                        assign show_readmore = ${se_stts?.show_readmore}
+                        assign show_blog_title = ${se_stts?.show_blog_title}
+                    -%} 
+                    <div class="t4s-section-inner t4s-section-inline-${se_stts?.heading_inline}" t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+                        {{- html_layout[0] -}}
+                        {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="1.5"{% endif %}>{% endif -%}
+                            ${heading}
+                            <div class="t4s-section-content t4s-row ${se_stts?.content_align} t4s-row t4s-g-lg-30 t4s-g-md-20 t4s-g-15 t4s_${se_stts?.image_ratio} t4s_position_${se_stts?.image_position} t4s_${se_stts?.image_size}">
+                                ${se_stts?.blog?.value ? `
+                                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-content-left">
+                                        {%-liquid
+                                            assign article = blog.articles.first
+                                            assign image = article.image 
+                                            assign article_metafields = article.metafields.theme 
+                                            assign article_url = article.url 
+                                        -%}
+                                        <article class="t4s-article2-item">
+                                            <div class="t4s-article2-inner t4s-pr t4s-oh">
+                                                {%- if image != blank -%}
+                                                    <div class="t4s-article2-thumb t4s-pr">
+                                                        <a class="t4s-eff t4s-eff-${se_stts?.b_effect} t4s-eff-img-${se_stts?.img_effect} t4s-d-block" href="{{ article_url }}">
+                                                            <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}"  data-cacl-slide>
+                                                                <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                            </div>
+                                                        </a>
+                                                        {%- if article_metafields.video_url != blank or article_metafields.gallery != blank -%}
+                                                            <div class="t4s-article2-metafields">
+                                                                {%- if article_metafields.video_url != blank -%}
+                                                                    <div data-open-mfp-iframe class="t4s-article2-metafields__video" href="{{ article_metafields.video_url }}" data-tooltip="right" title="{{ 'blogs.article.click_video' | t }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M443.9,196.9L141.5,10.5C119.6-3,93.1-3.5,70.7,9c-22.4,12.5-35.8,35.3-35.8,61v371.1c0,38.8,31.3,70.6,69.8,70.8c0.1,0,0.2,0,0.3,0c12,0,24.6-3.8,36.3-10.9c9.4-5.7,12.4-18,6.6-27.4c-5.7-9.4-18-12.4-27.4-6.6c-5.5,3.3-10.8,5.1-15.6,5.1 c-14.5-0.1-30.1-12.5-30.1-30.9V70.1c0-11,5.7-20.8,15.4-26.2c9.6-5.4,21-5.1,30.3,0.6l302.4,186.4c9.1,5.6,14.3,14.9,14.3,25.6 c0,10.7-5.3,20-14.4,25.6L204.1,415.9c-9.4,5.8-12.4,18-6.6,27.5c5.8,9.4,18,12.4,27.5,6.6l218.6-133.9 c20.9-12.8,33.5-35,33.5-59.5C477.2,232.1,464.7,209.8,443.9,196.9z"/></svg>
+                                                                    </div>
+                                                                {%- endif -%}
+                                                                {%- if article_metafields.gallery != blank -%}
+                                                                    {%- capture gallery_json %}[{% for image in article_metafields.gallery.value -%}
+                                                                    { "src": {{ image.src | image_url | json }}, "w": {{ image.width }}, "h": {{ image.height }}, "alt": {{ image.alt | json }} }{% unless forloop.last %},{% endunless -%}
+                                                                    {%- endfor %}]{% endcapture -%}
+                                                                    <div class="t4s-article2-metafields__images" data-pswp-images-trigger='{{ gallery_json }}' data-tooltip="right" title="{{ 'blogs.article.click_gallery' | t }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                                                            <polygon points="480,480 224,480 224,512 512,512 512,224 480,224"/>
+                                                                            <path d="M448,0H0v448h448V0z M416,416H32v-57.4L134.6,256h50.8l64,64h48.5l64-128H416V416z M416,160h-73.9l-64,128h-15.5l-64-64 h-77.2L32,313.4V32h384V160z"/>
+                                                                            <rect x="480" y="160" width="32" height="32"/>
+                                                                            <rect x="160" y="480" width="32" height="32"/>
+                                                                            <path d="M128,192c35.3,0,64-28.7,64-64s-28.7-64-64-64s-64,28.7-64,64S92.7,192,128,192z M128,96c17.7,0,32,14.3,32,32 s-14.3,32-32,32s-32-14.3-32-32S110.3,96,128,96z"/>
+                                                                        </svg>
+                                                                    </div>
+                                                                {%- endif -%}
+                                                            </div>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- endif -%}
+                                                <div class="t4s-article2-content__wrapper">
+                                                    <div class="t4s-article2-info">
+                                                        {%- if show_date -%}
+                                                            <div class="t4s-article2-time">
+                                                                {%- if date contains "%" -%}
+                                                                    {{ article.published_at | time_tag: date }}
+                                                                {%- else -%}	
+                                                                    {{ article.published_at | time_tag: format: date }}
+                                                                {%- endif -%}
+                                                            </div>
+                                                        {%- endif -%}
+                                                        {%- if show_blog_title != 'disable' -%}
+                                                            <div class="t4s-article2-category">
+                                                                {%- if show_blog_title == 'blog_current' -%}
+                                                                    <a href="{{ blog_url }}">{{ blog_title }}</a>
+                                                                {%- else -%}
+                                                                    {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+                                                                    {%- assign blog_tags = article_tags | where: 'blog_' -%}
+                                                                    {%- for tag in blog_tags -%}
+                                                                        <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'blog_' | strip }}</a> {%- unless forloop.last -%} ,  {% endunless -%}
+                                                                    {%- endfor -%}
+                                                                {%- endif -%}
+                                                            </div>
+                                                        {%- endif -%}
+                                                        <h3 class="t4s-article2-title"><a href="{{ article_url }}">{{ article.title }}</a></h3>
+                                                    </div>
+                                                    {%- if show_content -%}
+                                                        <div class="t4s-article2-content">{%- if article.excerpt.size > 0 -%}{{ article.excerpt }}{%- else -%}{{ article.content | strip_html | truncate: 90 }}{%- endif -%}</div>
+                                                    {%- endif -%}
+                                                    {%- if show_tags -%}
+                                                        {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+                                                        <div class="t4s-article2-tags">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                                            {%- for tag in article_tags -%} 
+                                                                {%- if tag contains 'blog_' -%}{%- continue -%}{%- endif -%}
+                                                                <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag }}</a> {%- unless forloop.last -%} ,  {% endunless -%}
+                                                            {%- endfor -%} 
+                                                        </div>
+                                                    {%- endif -%}
+                                                    {%- if show_author or show_comment -%}
+                                                        <div class="t4s-article2-metas">
+                                                            {%- if show_author -%}
+                                                                <div class="t4s-article2-author">
+                                                                    <span class="t4s-article2-author__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="t4s-article2-author__name"><span class="t4s-article-text__by">{{ by_txt }}</span> : {{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+                                                                </div>
+                                                            {%- endif -%}
+                                                        {%- if show_comment -%}
+                                                            {%- if article.comments_count > 0 %}
+                                                            {% assign cm_link = '#comments' %}
+                                                            {% else %}{% assign cm_link = '#CommentForm' %}
+                                                            {% endif -%}
+                                                            <div class="t4s-article2-comment">
+                                                                <a href="{{ article_url }}{{ cm_link }}" class="t4s-d-inline-block">
+                                                                    <span class="t4s-article2-comment__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="t4s-article2-comment__count">{{ 'blogs.comments.with_count_html' | t: count: article.comments_count }}</span>
+                                                                </a>
+                                                            </div>
+                                                        {%- endif -%}
+                                                        </div>	
+                                                    {%- endif -%}
+                                                    {%- if show_readmore -%}
+                                                        <div class="t4s-article2-btn"><a href="{{ article_url }}" class="t4s-article2-btn__readmore">{{ readmore_txt }}</a></div>
+                                                    {%- endif -%}
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-content-right">
+                                        {%- for article in blog.articles limit: limit offset:1 -%}
+                                            {%-liquid
+                                                assign image = article.image 
+                                                assign article_metafields = article.metafields.theme 
+                                                assign article_url = article.url 
+                                            -%}
+                                            <div class="t4s-row t4s-g-md-20 t4s-g-15 t4s-article2-item t4s-space-article-inner">
+                                                <div class="t4s-col-item t4s-col t4s-article2-item__img">
+                                                    {%- if image != blank -%}
+                                                        <div class="t4s-article2-thumb t4s-pr">
+                                                            <a class="t4s-eff t4s-eff-${se_stts?.b_effect} t4s-eff-img-${se_stts?.img_effect} t4s-d-block" href="{{ article_url }}">
+                                                                <div class="t4s_ratio t4s-bg-11" style="background: url({{ image | image_url: width: 1 }});--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}"  data-cacl-slide>
+                                                                    <img class="lazyloadt4s t4s-lz--fadeIn t4s-obj-eff" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                                </div>
+                                                            </a>
+                                                            {%- if article_metafields.video_url != blank or article_metafields.gallery != blank -%}
+                                                                <div class="t4s-article2-metafields">
+                                                                    {%- if article_metafields.video_url != blank -%}
+                                                                        <div data-open-mfp-iframe class="t4s-article2-metafields__video" href="{{ article_metafields.video_url }}" data-tooltip="right" title="{{ 'blogs.article.click_video' | t }}">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M443.9,196.9L141.5,10.5C119.6-3,93.1-3.5,70.7,9c-22.4,12.5-35.8,35.3-35.8,61v371.1c0,38.8,31.3,70.6,69.8,70.8c0.1,0,0.2,0,0.3,0c12,0,24.6-3.8,36.3-10.9c9.4-5.7,12.4-18,6.6-27.4c-5.7-9.4-18-12.4-27.4-6.6c-5.5,3.3-10.8,5.1-15.6,5.1 c-14.5-0.1-30.1-12.5-30.1-30.9V70.1c0-11,5.7-20.8,15.4-26.2c9.6-5.4,21-5.1,30.3,0.6l302.4,186.4c9.1,5.6,14.3,14.9,14.3,25.6 c0,10.7-5.3,20-14.4,25.6L204.1,415.9c-9.4,5.8-12.4,18-6.6,27.5c5.8,9.4,18,12.4,27.5,6.6l218.6-133.9 c20.9-12.8,33.5-35,33.5-59.5C477.2,232.1,464.7,209.8,443.9,196.9z"/></svg>
+                                                                        </div>
+                                                                    {%- endif -%}
+                                                                    {%- if article_metafields.gallery != blank -%}
+                                                                        {%- capture gallery_json %}[{% for image in article_metafields.gallery.value -%}
+                                                                        { "src": {{ image.src | image_url | json }}, "w": {{ image.width }}, "h": {{ image.height }}, "alt": {{ image.alt | json }} }{% unless forloop.last %},{% endunless -%}
+                                                                        {%- endfor %}]{% endcapture -%}
+                                                                        <div class="t4s-article2-metafields__images" data-pswp-images-trigger='{{ gallery_json }}' data-tooltip="right" title="{{ 'blogs.article.click_gallery' | t }}">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                                                                                <polygon points="480,480 224,480 224,512 512,512 512,224 480,224"/>
+                                                                                <path d="M448,0H0v448h448V0z M416,416H32v-57.4L134.6,256h50.8l64,64h48.5l64-128H416V416z M416,160h-73.9l-64,128h-15.5l-64-64 h-77.2L32,313.4V32h384V160z"/>
+                                                                                <rect x="480" y="160" width="32" height="32"/>
+                                                                                <rect x="160" y="480" width="32" height="32"/>
+                                                                                <path d="M128,192c35.3,0,64-28.7,64-64s-28.7-64-64-64s-64,28.7-64,64S92.7,192,128,192z M128,96c17.7,0,32,14.3,32,32 s-14.3,32-32,32s-32-14.3-32-32S110.3,96,128,96z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                    {%- endif -%}
+                                                                </div>
+                                                            {%- endif -%}
+                                                        </div>
+                                                    {%- endif -%}
+                                                </div>
+                                                <div class="t4s-col-item t4s-col t4s-article2-item__content">
+                                                    <div class="t4s-article2-content__wrapper">
+                                                        <div class="t4s-article2-info">
+                                                            {%- if show_date -%}
+                                                                <div class="t4s-article2-time">
+                                                                    {%- if date contains "%" -%}
+                                                                        {{ article.published_at | time_tag: date }}
+                                                                    {%- else -%}	
+                                                                        {{ article.published_at | time_tag: format: date }}
+                                                                    {%- endif -%}
+                                                                </div>
+                                                            {%- endif -%}
+                                                            {%- if show_blog_title != 'disable' -%}
+                                                                <div class="t4s-article2-category">
+                                                                    {%- if show_blog_title == 'blog_current' -%}
+                                                                        <a href="{{ blog_url }}">{{ blog_title }}</a>
+                                                                    {%- else -%}
+                                                                        {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+                                                                        {%- assign blog_tags = article_tags | where: 'blog_' -%}
+                                                                        {%- for tag in blog_tags -%}
+                                                                            <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag | remove : 'blog_' | strip }}</a> {%- unless forloop.last -%} ,  {% endunless -%}
+                                                                        {%- endfor -%}
+                                                                    {%- endif -%}
+                                                                </div>
+                                                            {%- endif -%}
+                                                            <h3 class="t4s-article2-title"><a href="{{ article_url }}">{{ article.title }}</a></h3>
+                                                        </div>
+                                                        {%- if show_content -%}
+                                                            <div class="t4s-article2-content">{%- if article.excerpt.size > 0 -%}{{ article.excerpt }}{%- else -%}{{ article.content | strip_html | truncate: 90 }}{%- endif -%}</div>
+                                                        {%- endif -%}
+                                                        {%- if show_tags -%}
+                                                            {%- assign article_tags = article.tags | join: ';' | split: ';' -%}
+                                                            <div class="t4s-article2-tags">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                                                {%- for tag in article_tags -%} 
+                                                                    {%- if tag contains 'blog_' -%}{%- continue -%}{%- endif -%}
+                                                                    <a href="{{ blog_url }}/tagged/{{ tag | handle }}">{{ tag }}</a> {%- unless forloop.last -%} ,  {% endunless -%}
+                                                                {%- endfor -%} 
+                                                            </div>
+                                                        {%- endif -%}
+                                                        {%- if show_author or show_comment -%}
+                                                            <div class="t4s-article2-metas">
+                                                                {%- if show_author -%}
+                                                                    <div class="t4s-article2-author">
+                                                                        <span class="t4s-article2-author__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="t4s-article2-author__name"><span class="t4s-article-text__by">{{ by_txt }}</span> : {{ article.author | replace_first: 'ad clnt', 'admin' }}</span>
+                                                                    </div>
+                                                                {%- endif -%}
+                                                                {%- if show_comment -%}
+                                                                    {%- if article.comments_count > 0 %}{% assign cm_link = '#comments' %}{% else %}{% assign cm_link = '#CommentForm' %}{% endif -%}
+                                                                    <div class="t4s-article2-comment">
+                                                                        <a href="{{ article_url }}{{ cm_link }}" class="t4s-d-inline-block">
+                                                                            <span class="t4s-article2-comment__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="t4s-article2-comment__count">{{ 'blogs.comments.with_count_html' | t: count: article.comments_count }}</span>
+                                                                        </a>
+                                                                    </div>
+                                                                {%- endif -%}
+                                                            </div>	
+                                                        {%- endif -%}
+                                                        {%- if show_readmore -%}
+                                                            <div class="t4s-article2-btn"><a href="{{ article_url }}" class="t4s-article2-btn__readmore">{{ readmore_txt }}</a></div>
+                                                        {%- endif -%}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {%- endfor -%}
+                                    </div>
+                                `
+                                :`
+                                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-content-left">
+                                        <article class="t4s-article2-item">
+                                            <div class="t4s-article2-inner t4s-pr t4s-oh">
+                                                <div class="t4s-article2-thumb t4s-pr">
+                                                    <a class="t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }} t4s-d-block" href="/admin/blogs" data-cacl-slide >
+                                                        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                                                        <div class="t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}">
+                                                            {{ 'lifestyle-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+                                                        </div> 
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="t4s-article-content__wrapper">
+                                                <div class="t4s-article2-info">
+                                                    {%- if show_date -%}
+                                                        <div class="t4s-article2-time">AUG 11, 2023</div>    
+                                                    {%- endif -%}
+                                                    {%- if show_blog_title != 'disable' -%}
+                                                        <div class="t4s-article2-category">Fashion</div>
+                                                    {%- endif -%}
+                                                    <h3 class="t4s-article2-title"><a href="/admin/blogs">{{ 'onboarding.blog_title' | t }}</a></h3>
+                                                </div>
+                                                {%- if show_content -%}
+                                                    <div class="t4s-article2-content">{{ 'onboarding.blog_excerpt' | t }}</div>
+                                                {%- endif -%}
+                                                {%- if show_tags -%}
+                                                    <div class="t4s-article2-tags">
+                                                        <a href="/admin/blogs">Fashion</a>,  <a href="/admin/blogs">Lifestyle</a>
+                                                    </div>
+                                                {%- endif -%}
+                                                <div class="t4s-article2-metas">
+                                                    {%- if show_author -%}
+                                                        <div class="t4s-article2-author">
+                                                            <span class="t4s-article2-author__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                                                            <span class="t4s-author-name"><span>{{ by_txt }} : </span>{{ 'onboarding.blog_author' | t }}</span>
+                                                        </div>
+                                                    {%- endif -%}
+                                                    {%- if show_comment -%}
+                                                        <div class="t4s-article2-comment">
+                                                            <span class="t4s-article2-comment__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                                                            <span class="t4s-article2-comment__count">{{ 'blogs.comments.with_count' | t: count: 19 }}</span>
+                                                        </div>
+                                                    {%- endif -%}
+                                                </div>
+                                                {%- if show_readmore %}
+                                                    <div class="t4s-article2-btn">
+                                                        <a href="/admin/blogs" class="t4s-article2-btn__readmore">{{ 'blogs.article.read_more' | t }}</a>
+                                                    </div>
+                                                {% endif -%}
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="t4s-col-item t4s-col-md-6 t4s-col-12 t4s-content-right">
+                                        {%- for i in (1..6) limit: limit -%}
+                                            <div class="t4s-row t4s-g-md-20 t4s-g-15 t4s-article2-item t4s-space-article-inner">
+                                                <div class="t4s-col-item t4s-col t4s-article2-item__img">
+                                                    <div class="t4s-article2-thumb t4s-pr">
+                                                        <a class="t4s-eff t4s-eff-{{ b_effect }} t4s-eff-img-{{ img_effect }} t4s-d-block" href="/admin/blogs" data-cacl-slide >
+                                                            {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                                                            <div class="t4s_ratio" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 2 }}">
+                                                                {{ 'lifestyle-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg t4s-obj-eff' }}  
+                                                            </div> 
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="t4s-col-item t4s-col t4s-article2-item__content">
+                                                    <div class="t4s-article-content__wrapper">
+                                                        <div class="t4s-article2-info">
+                                                            {%- if show_date -%}
+                                                                <div class="t4s-article2-time">AUG 11, 2023</div>    
+                                                            {%- endif -%}
+                                                            {%- if show_blog_title != 'disable' -%}
+                                                                <div class="t4s-article2-category">Fashion</div>
+                                                            {%- endif -%}
+                                                            <h3 class="t4s-article2-title"><a href="/admin/blogs">{{ 'onboarding.blog_title' | t }}</a></h3>
+                                                        </div>
+                                                        {%- if show_content -%}
+                                                            <div class="t4s-article2-content">{{ 'onboarding.blog_excerpt' | t | strip_html | truncate: 90 }}</div>
+                                                        {%- endif -%}
+                                                        {%- if show_tags -%}
+                                                            <div class="t4s-article2-tags">
+                                                                <a href="/admin/blogs">Fashion</a>,  <a href="/admin/blogs">Lifestyle</a>
+                                                            </div>
+                                                        {%- endif -%}
+                                                        <div class="t4s-article2-metas">
+                                                            {%- if show_author -%}
+                                                                <div class="t4s-article2-author">
+                                                                    <span class="t4s-article2-author__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                                                                    <span class="t4s-author-name"><span>{{ by_txt }} : </span>{{ 'onboarding.blog_author' | t }}</span>
+                                                                </div>
+                                                            {%- endif -%}
+                                                            {%- if show_comment -%}
+                                                                <div class="t4s-article2-comment">
+                                                                    <span class="t4s-article2-comment__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                                                                    <span class="t4s-article2-comment__count">{{ 'blogs.comments.with_count' | t: count: 19 }}</span>
+                                                                </div>
+                                                            {%- endif -%}
+                                                        </div>
+                                                        {%- if show_readmore %}
+                                                            <div class="t4s-article2-btn">
+                                                                <a href="/admin/blogs" class="t4s-article2-btn__readmore">{{ 'blogs.article.read_more' | t }}</a>
+                                                            </div>
+                                                        {% endif -%}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {%- endfor -%}
+                                    </div>    
+                                `}
+                            </div>
+                        {{- html_layout[1] -}}
+                    </div>
+                    
+                  `,
+                  preview: ``
+              }
+          }
+        },
+  
+        style() {
+            return [
+                {
+                    group_alias:'text',
+                    options: {
+                        group_title: 'Heading',
+                        group_name: 'heading',
+                        selector: ' .element__heading .ecom__heading'
+                    },
+                    modify:{
+                      remove: {
+                          index: 0, length: 1
+                      },
+                      params:[
+                          {
+                              position:1,
+                              fields:[
+                                  {
+                                      alias:'justify-content',
+                                      options:{
+                                          label:'Alignment',
+                                      }
+                                  }
+                              ]
+                          },
+                          {
+                              position:4,
+                              fields: {alias: 'spacing'}
+                          },
+                      ]
+                  }
+                },
+                {
+                    group_alias:'text',
+                    options: {
+                        group_title: 'Sub heading',
+                        group_name: 'subheading',
+                        selector: ' .element__heading .t4s-top-heading-subheading .t4s-subtitle'
+                    },
+                    modify: {
+                        params: {
+                          position:4,
+                          fields: {alias: 'spacing'}
+                      },
+                    }
+                }
+            ];
+        },
+  
+        heading () {
+            return this.data;
+        },
+  
+        activeMe () {
+            return (this.editingElement?.data?.id ?? 0) === this.heading.id;
+        },
+  
+        default() {
+            return {
+                settings: {
+                    content: "Enter your heading",
+                    tag: "h2"
+                },
+                style: {
+                    text: {
+                        textTextAlign: "left"
+                    }
+                }
+            }
+        },
+        css() {
+          return `
+                  .ecom__element--button-icon svg{width: 20px; height: auto}
+                  .t4s-cbl {
+                      color: #222
+                  }
+                  .heading-char {
+                      margin-top: 10px;
+                  }
+              `;
+        }
+  
+    },
+    watch: {
+        activeMe (val) {
+            if (!val && this.editing === true) {
+                this.editing = false;
+                this.heading.settings.content = this.$refs.content.innerHTML;
+            }
+        }
+    },
+    methods: {
+        edit() {
+            if (this.editing === false) {
+                this.editing = true;
+                this.editingValue = this.data.settings.content;
+            }
+        },
+        update(e) {
+            if (
+                this.editing
+            ) {
+                this.heading.settings.content = e.target.innerHTML;
+            }
+        },
+  
+    }
+  
+  }
+  </script></head><body cz-shortcut-listen="true"></body></html>

@@ -1,0 +1,1837 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><template></template>
+<script>
+  export default {
+    name: "Unsen Product Grid",
+    props: {
+      data: {
+        type: Object,
+        default() {
+          return {};
+        },
+      },
+    },
+    computed: {
+      requestShopifyType() {
+        let requires = ["collection", "product"];
+        if (this.data.template && requires.includes(this.data.template)) {
+          return {
+            shopify_type: this.data.template,
+          };
+        }
+        return {};
+      },
+      javascript() {
+        return function () {
+          let $el = this.$el;
+          if (!$el) return;
+          if (
+            !this.isLive &&
+            typeof T4SThemeSP != "undefined" &&
+            typeof T4SThemeSP.reinitProductGridItem == "function"
+          ) {
+            T4SThemeSP.reinitProductGridItem();
+          }
+        };
+      },
+      se_stts() {
+        return this.data.settings;
+      },
+      liquids() {
+        return {
+          product_items: {
+            code: `
+                      ${this.assignItems}
+  
+                      <!-- sections/featured-collection.liquid -->
+                      {{ 'section.css' | asset_url | stylesheet_tag }}
+                      {{ 'collection-products.css' | asset_url | stylesheet_tag }}
+                      {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+                      {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+                      <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                      {%- liquid
+                        assign sid = '${this.data.id}'
+                        assign stt_layout = '${this.se_stts?.layout}'
+                      -%}
+                      {%- liquid
+  
+                        assign layout_des = '${this.se_stts?.layout_des || '1'}'
+                        assign image_ratio = '${this.se_stts?.image_ratio}'
+                        if image_ratio == "ratioadapt"
+                          assign imgatt = ''
+                        else
+                          assign imgatt = 'data-'
+                        endif
+  
+                        assign use_pagination = '${this.se_stts?.use_pagination || 'none'}'
+                        assign text_view_all = '${this.se_stts?.text_view_all ? this.se_stts?.text_view_all : ''}'
+                        assign button_style = '${this.se_stts?.button_style ? this.se_stts?.button_style : 'default'}'
+                        assign sett_equal = false
+                        assign show_vendor = ${this.se_stts?.show_vendor}
+                        assign use_link_vendor = true
+                        assign enable_rating = settings.enable_rating
+                        if enable_rating
+                          assign rating_pos =  '${this.se_stts?.rating_pos}'
+                        endif
+                        assign list_color_pos = '${this.se_stts?.list_color_pos}'
+                        assign list_size_pos = '${this.se_stts?.list_size_pos}'
+                        assign product_des = '${this.se_stts?.product_des || '1'}'
+                        assign nav_btn = ${this.se_stts?.nav_btn}
+                        assign nav_dot = ${this.se_stts?.nav_dot}
+                        assign btn_owl = 'default'
+                        if btn_owl == "outline"
+                          assign arrow_icon = 1
+                        else
+                          assign arrow_icon = 2
+                        endif
+  
+                        assign show_img = settings.show_img
+                        assign isGrowaveWishlist = false
+                        if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+                          assign isGrowaveWishlist = true
+                        endif
+                        assign placeholder_img = settings.placeholder_img
+                        assign enable_pr_size = settings.enable_pr_size
+                        assign pr_size_pos = settings.pr_size_pos
+                        assign show_size_type = settings.show_size_type
+                        assign size_ck = settings.size_ck | append: ',size,sizes,Größe'
+                        assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+  
+                        assign enable_pr_color = settings.enable_pr_color
+                        assign show_cl_type = settings.show_color_type
+                        assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+                        assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+  
+                        assign price_varies_style = settings.price_varies_style
+                        assign app_review = settings.app_review
+                        assign use_countdown = ${this.se_stts?.use_cdt}
+  
+                        assign results_count = collection.products_count
+                        assign head_bigger = false
+                        -%}
+  
+                      {%- paginate collection.products by limit -%}
+  
+                      <div data-not-main data-ntajax-options='{"id": "{{ sid }}","type": "{{ typeAjax }}","isProduct": true,"view": ""}' class="t4s-section-inner t4s_se_{{ sid }}" {% render 'section_style', se_stts: se_stts %}>
+                          <div class="{% if head_bigger %} t4s-sec-has-head-bigger{% endif %} {% if head_btn_url != blank and head_btn_label != blank %}t4s-sec-head-btn-on{% endif %} t4s-head-slide-nav-${this.se_stts?.head_slide_btn || false} t4s-hidden-head-btn-mb-{{ se_stts.hidden_btn_mb }}" style="--head-mgb: 45px;--head-mgb-tb: 30px;--head-mgb-mb: 10px;">
+                          <div class="t4s-section-head" style="--tophead-mb: 30px;--tophead-mb-tb: 30px;--tophead-mb-mb: 10px;">
+                            {%- render 'section_tophead', se_stts: se_stts, get_height: true -%}
+                            {%- if head_btn_url != blank or head_slide_btn -%}
+                              <div class="t4s-head-btn">
+                                {% if head_btn_url != blank and head_btn_label != blank %}
+                                  {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                                  <a class="t4s-btn t4s-btn-base t4s-btn-style-default t4s-btn-size-1 t4s-btn-icon-true t4s-btn-color-dark t4s-btn-rounded-false {% if se_stts.head_button_style == 'default' or se_stts.head_button_style == 'outline' %}t4s-btn-effect-sweep-to-right{% endif %}" ">{{ head_btn_label }}
+                                    {%- if se_stts.head_btn_icon -%}
+                                      <svg class="t4s-btn-icon" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 489.6 489.6"><path d="M0,244.8c0,9.5,7.7,17.2,17.2,17.2h414.2L322.9,370.4c-3.3,3.3-5,7.7-5,12.1s1.7,8.8,5,12.1c6.7,6.7,17.6,6.7,24.3,0 l137.6-137.7c6.4-6.4,6.4-17.8,0-24.3L347.1,95c-6.7-6.7-17.6-6.7-24.3,0c-6.7,6.7-6.7,17.6,0,24.3l108.4,108.4H17.1 C7.6,227.6,0,235.3,0,244.8z"></path></svg>
+                                    {%- endif -%}
+                                  </a>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          </div>
+                          {%- if layout_des == "1" -%}
+                            {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                            <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                            <div data-collection-url="{{ collection.url }}" data-contentlm-replace class="t4s_box_pr_grid t4s-products t4s-justify-content-center t4s-border-pr-img-${this.se_stts?.border_pr || false } t4s-text-${this.se_sttstem?.content_align} t4s_{{ image_ratio }} t4s_position_${
+                              this.se_stts?.image_position
+                            } t4s_${
+              this.se_stts?.image_size
+            } t4s-row t4s-row-cols-lg-${
+              this.data.settings?.col_dk || "4"
+            } t4s-row-cols-md-${
+              this.data.settings?.col_dk__tablet || "3"
+            } t4s-row-cols-${
+              this.data.settings?.col_dk__mobile || "2"
+            } t4s-gx-lg-${this.se_stts?.space_h_item || '30'} t4s-gy-lg-${
+              this.se_stts?.space_v_item  || '30' } t4s-gx-md-${this.se_stts?.space_h_item_tb || '15'} t4s-gy-md-${
+              this.se_stts?.space_v_item_tb  || '15' } t4s-gx-${this.se_stts?.space_h_item_mb || '15'} t4s-gy-${this.se_stts?.space_v_item_mb || '20' }">
+                          {%- elsif layout_des == "2" -%}
+                            <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver class="t4s-flickity-slider t4s_box_pr_slider t4s-products t4s-border-pr-${this.se_stts?.border_pr || false } t4s-text-${this.se_stts?.content_align} t4s_{{ image_ratio }} t4s_position_${this.se_stts?.image_position} t4s_${
+              this.se_stts?.image_size
+            } {% if nav_btn %} t4s-slider-btn__${
+              this.se_stts?.btn_pos || "in"
+            }-content t4s-slider-btn-style-${this.se_stts?.btn_owl || 'small'} t4s-slider-btn-${this.se_stts?.btn_shape} t4s-slider-btn-${this.se_stts?.btn_size} t4s-slider-btn-cl-${this.se_stts?.btn_cl} t4s-slider-btn-vi-${
+              this.se_stts?.btn_vi || "always"
+            } t4s-slider-btn-hidden-mobile-${this.se_stts?.btn_hidden_mobile || false} {% endif %}{% if nav_dot %} t4s-dots-style-${this.se_stts?.dot_owl} t4s-dots-cl-${this.se_stts?.dots_cl} t4s-dots-round-${this.se_stts?.dots_round || false } t4s-dots-hidden-mobile-${this.se_stts?.dots_hidden_mobile || false} {% endif %} t4s-row t4s-row-cols-lg-${
+              this.data.settings?.col_dk || "4"
+            } t4s-row-cols-md-${
+              this.data.settings?.col_dk__table || "3"
+            } t4s-row-cols-${
+              this.data.settings?.col_dk__mobile || "2"
+            } t4s-gx-lg-${this.se_stts?.space_h_item || '30'} t4s-gy-lg-${
+              this.se_stts?.space_v_item || '30' } t4s-gx-md-${this.se_stts?.space_h_item_tb || '15'} t4s-gy-md-${
+              this.se_stts?.space_v_item_tb || '15' } t4s-gx-${this.se_stts?.space_h_item_mb || '15'} t4s-gy-${
+              this.se_stts?.space_v_item_mb || '20' }  flickityt4s" data-flickityt4s-js='{"setPrevNextButtons": true,"arrowIcon": "{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": ${
+              this.se_stts?.loop || true
+            },"prevNextButtons": {{${
+              this.se_stts?.nav_btn || false
+            }}},"percentPosition": 1,"pageDots": {{${this.se_stts?.nav_dot || false}}}, "autoPlay" : ${
+              this.se_stts?.au_time ? this.se_stts?.au_time * 1000 : 0
+            }, "pauseAutoPlayOnHover" : ${
+              this.se_stts?.au_hover || true
+            } }' style="--btn-distance: ${
+              this.se_stts?.btn_distance || 15
+            }px;--space-dots: 10px;--dots-bottom-pos: 20px;"> 
+                          {%- else -%}
+                            {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                            <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                            <div data-collection-url="{{ collection.url }}"  data-t4s-resizeobserver data-contentlm-replace class="isotopet4s t4s_box_pr_masonry t4s-border-pr-img-false t4s-text-${this.se_stts?.content_align} t4s_{{ image_ratio }} t4s_position_${
+                              this.se_stts?.image_position
+                            } t4s_${
+              this.se_stts?.image_size
+            } t4s-row t4s-row-cols-lg-${
+              this.data.settings?.col_dk || "4"
+            } t4s-row-cols-md-${
+              this.data.settings?.col_dk__table || "3"
+            } t4s-row-cols-${
+              this.data.settings?.col_dk__mobile || "2"
+            } t4s-gx-lg-${this.se_stts?.space_h_item || '30'} t4s-gy-lg-${
+              this.se_stts?.space_v_item
+            } t4s-gx-md-${this.se_stts?.space_h_item_tb || '15'} t4s-gy-md-${
+              this.se_stts?.space_v_item_tb
+            } t4s-gx-${this.se_stts?.space_h_item_mb || '15'} t4s-gy-${
+              this.se_stts?.space_v_item_mb
+            }" data-isotopet4s-js='{ "itemSelector": ".t4s-product", "layoutMode": "masonry" }'>
+                          {%- endif -%}
+                            {%- if collection != blank -%}
+                              {%- liquid
+                                case product_des
+                                  when '1'
+                                    render 'pr-grid-item1' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '2'
+                                    render 'pr-grid-item2' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '3'
+                                    render 'pr-grid-item3' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '4'
+                                    render 'pr-grid-item4' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '5'
+                                    render 'pr-grid-item5' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '6'
+                                    render 'pr-grid-item6' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '7'
+                                    render 'pr-grid-item7' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                endcase -%}
+                            {%- else -%}
+                              {%- for i in (1..18) limit: limit -%}
+                                <div class="t4s-col-item t4s-product t4s-pr-grid t4s-pr-style{{ product_des }} t4s-pr-item t4s-pr-des-{{ product_des }}">
+                                  <div class="t4s-product-wrapper" data-cacl-slide >
+                                    <div class="t4s-product-inner">
+                                      <a class="t4s-d-block" data-cacl-slide href="/admin/products">{%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                                      {{ 'product-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg' }}</a>
+                                    </div>
+                                    <div class="t4s-product-info">
+                                      <div class="t4s-product-info__inner">
+                                        <h3 class="t4s-product-title"><a href="/admin/products">{{ 'onboarding.product_title' | t }}</a></h3>
+                                        <span class="t4s-product-price"><del>$59.00</del><ins>$39.00</ins></span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {%- endfor -%}
+                            {%- endif -%}
+                          </div>
+                          {% if use_pagination != "none" %}   
+                            {%- if paginate.pages > 1 -%}
+                              <div class="t4s-prs-footer t4s-has-btn-{{ use_pagination }} ${this.se_stts?.btns_pos}">
+                                  <a class="t4s-viewall-btn t4s-btn t4s-btn-base t4s-btn-style-${this.se_stts?.button_style} t4s-btn-size-small t4s-btn-rounded-${this.se_stts?.btn_rounded || 'false'} t4s-btn-icon-${this.se_stts?.btn_icon || 'false'} t4s-btn-color-${this.se_stts?.btns_cl}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-default{% endif %}" href="{{ collection.url }}">
+                                  {%- if text_view_all != '' -%}
+                                    {{ text_view_all }}
+                                  {%- else -%}
+                                    {{ 'collections.pagination.view_all' | t }}
+                                  {%- endif -%} 
+                                  {%- if ${this.se_stts?.btn_icon || 'false'} -%} <svg class="t4s-btn-icon" viewBox="0 0 14 10"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+                              </div>
+                            {%- endif -%} 
+                          {%- endif -%} 
+                        </div>
+                      </div>
+  
+                      {%- endpaginate -%}
+                  `,
+            preview:
+              `<div class="ecom-collection__product--wrapper-items ecom-collection-product__layout-grid" >` +
+              [1, 2, 3, 4]
+                .map(() => {
+                  return `
+                                          <div class="ecom-collection__product-item">
+                                              <div class="ecom-collection__product-card ecom-collection__product-card-loading">
+                                                  <div class="ecom-collection__product-card-image">
+                                                  </div>
+                                                  <div class="ecom-collection__product-card-content">
+                                                      <h4></h4>
+                                                      <div class="ecom-collection__product-card-description">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                      </div>`;
+                })
+                .join("") +
+              "</div>",
+          },
+        };
+      },
+      settings() {
+        const settings = [
+          {
+            group_title: "Gerenal",
+            params: [
+              {
+                type: "number",
+                label: "Maximum products to show",
+                name: "limit",
+                value: 8,
+                options: {
+                  min: 1,
+                  max: 50,
+                },
+              },
+              {
+                type: "number",
+                label: "Items per row",
+                name: "col_dk",
+                value: "4",
+                options: {
+                  responsive: true,
+                  min: 1,
+                  max: 6,
+                },
+              },
+              // {
+              //     type: "toggle",
+              //     name: "show_view_all",
+              //     label: "Show view all button",
+              //     options: {
+              //         oneline: true,
+              //         values: {
+              //             on: {
+              //                 label: "Yes",
+              //                 value: true
+              //             },
+              //             off: {
+              //                 label: "No",
+              //                 value: false
+              //             }
+              //         }
+              //     },
+              // },
+              // {
+              //     type: "text",
+              //     name: "view_all_text",
+              //     label: "View all text",
+              //     value: "View all",
+              //     options: {
+              //       visible: {
+              //             condition: (data) => data.show_view_all
+              //         }
+              //     },
+              // },
+              // {
+              //     type: "picker",
+              //     label: "View all icon",
+              //     name: "view_all_icon",
+              //     options: {
+              //         type: "icon",
+              //         layout: "grid",
+              //         output: "value",
+              //         multiple: false,
+              //         simple: false,
+              //         visible: {
+              //             condition: (data) => data.show_view_all
+              //         }
+              //     }
+              // },
+              // {
+              //     type: "popup",
+              //     label: "view all icon position",
+              //     name: "view_all_icon_position",
+              //     options: {
+              //         type: "dropdown",
+              //         default: false,
+              //         values: {
+              //             before: "Before",
+              //             after: "After"
+              //         },
+              //         visible: {
+              //             keep_data: false,
+              //             condition: (data) => {
+              //                 return data["view_all_icon"];
+              //             }
+              //         }
+              //     }
+              // },
+              {
+                type: "toggle",
+                name: "show_vendor",
+                label: "Show product vendor",
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                },
+              },
+              {
+                type: "toggle",
+                name: "use_cdt",
+                label: "Show product countdown",
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                },
+              },
+              {
+                type: "popup",
+                label: "Pagination",
+                name: "use_pagination",
+                value: "none",
+                options: {
+                  type: "dropdown",
+                  default: false,
+                  values: {
+                    "none": "None",
+                    "view-all": "'View all' button",
+                  },
+                },
+              },
+              {
+                type: 'text',
+                label: 'View all title (optional)',
+                name: 'text_view_all',
+                value: 'SHOP ALL'
+              },
+              {
+                type: "toggle",
+                name: "btn_icon",
+                label: "Enable button icon",
+                options: {
+                    oneline: true,
+                    values: {
+                        on: {
+                            label: "Yes",
+                            value: true
+                        },
+                        off: {
+                            label: "No",
+                            value: false
+                        }
+                    },
+                    visible: {
+                        condition: (data) => data.use_pagination != "none"
+                    }
+                }
+              },
+              {
+                type: "toggle",
+                name: "btn_rounded",
+                label: "Button rounded",
+                options: {
+                    oneline: true,
+                    values: {
+                        on: {
+                            label: "Yes",
+                            value: true
+                        },
+                        off: {
+                            label: "No",
+                            value: false
+                        }
+                    },
+                    visible: {
+                        condition: (data) => data.use_pagination != "none"
+                    }
+                }
+              },
+              {
+                label: "Button style",
+                name: "button_style",
+                type: "popup",
+                value: 'default',
+                options: {
+                    preview: "title",
+                    type: "dropdown",
+                    values: {
+                        'default': "Default",
+                        'outline': "Outline",
+                        'bordered': "Bordered bottom",
+                        'link': "Link"
+                    },
+                    default: false,
+                    visible: {
+                        condition: (data) => data.use_pagination != "none"
+                    }
+                }
+              },
+              {
+                label: "Button color",
+                name: "btns_cl",
+                type: "popup",
+                value: 'dark',
+                options: {
+                    preview: "title",
+                    type: "dropdown",
+                    values: {
+                        'light': "Light",
+                        'dark': "Dark",
+                        'primary': "Primary"
+                    },
+                    default: false,
+                    visible: {
+                        condition: (data) => data.use_pagination != "none"
+                    }
+                }
+              },
+              {
+                label: "Button position",
+                name: "btns_pos",
+                type: "popup",
+                value: 't4s-text-center',
+                options: {
+                    preview: "title",
+                    type: "dropdown",
+                    values: {
+                        't4s-text-start': "Left",
+                        't4s-text-center': "Center",
+                        't4s-text-end': "Right"
+                    },
+                    default: false,
+                    visible: {
+                        condition: (data) => data.use_pagination != "none"
+                    }
+                }
+              }
+            ],
+          },
+          {
+            group_title: "Design",
+            params: [
+              {
+                label: "Layout",
+                name: "layout",
+                type: "popup",
+                value: "t4s-container-wrap",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    "t4s-se-container": "Container",
+                    "t4s-container-wrap": "Wrapped container",
+                    "t4s-container-fluid": "Full width",
+                  },
+                  default: false,
+                },
+              },
+              {
+                label: "Style",
+                name: "product_des",
+                type: "popup",
+                value: "1",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    1: "Design 1",
+                    2: "Design 2",
+                    3: "Design 3",
+                    4: "Design 4",
+                    5: "Design 5",
+                    6: "Design 6",
+                    7: "Design 7",
+                  },
+                  default: false,
+                },
+              },
+              {
+                label: "Rating position",
+                name: "rating_pos",
+                type: "popup",
+                value: "1",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    1: "Above product name",
+                    2: "Under product name",
+                    3: "Hidden",
+                  },
+                  default: false,
+                },
+              },
+              {
+                label: "Colors swatches position",
+                name: "list_color_pos",
+                type: "popup",
+                value: "1",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    1: "On image product/top info",
+                    2: "In product info/bottom info",
+                  },
+                  default: false,
+                },
+              },
+              {
+                label: "Sizes list position",
+                name: "list_size_pos",
+                type: "popup",
+                value: "1",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    1: "On image product/top info",
+                    2: "In product info/bottom info",
+                  },
+                  default: false,
+                },
+              },
+              {
+                  label: "Space horizontal items",
+                  name: "space_h_item",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                  }
+              },
+              {
+                  label: "Space vertical items",
+                  name: "space_v_item",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                  }
+              },
+              {
+                  label: "Space horizontal items(tablet)",
+                  name: "space_h_item_tb",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                  }
+              },
+              {
+                  label: "Space vertical items(tablet)",
+                  name: "space_v_item_tb",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                  }
+              },
+              {
+                  label: "Space horizontal items(mobile)",
+                  name: "space_h_item_mb",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                  }
+              },
+              {
+                  label: "Space vertical items(mobile)",
+                  name: "space_v_item_mb",
+                  type: "popup",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          '0': "0",
+                          '2': "2px",
+                          '4': "4px",
+                          '6': "6px",
+                          '8': "8px",
+                          '10': "10px",
+                          '15': "15px",
+                          '20': "20px",
+                          '30': "30px",
+                      },
+                      default: false,
+                    }
+                }
+            ],
+          },
+          {
+            group_title: "Box options",
+            params: [
+              {
+                label: "Layout design",
+                name: "layout_des",
+                type: "popup",
+                value: "2",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    1: "Grid",
+                    2: "Carousel",
+                    3: "Masonry",
+                  },
+                  default: false,
+                },
+              },
+              {
+                type: "toggle",
+                name: "border_pr",
+                label: "Enable border product items",
+                value: false,
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                },
+              },
+              {
+                type: "toggle",
+                name: "loop",
+                label: "Enable loop",
+                value: true,
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                  visible: {
+                    condition: (data) => data.layout_des === "2",
+                  },
+                },
+              },
+              {
+                name: "au_time",
+                type: "number",
+                label: "Autoplay speed in second.",
+                description: "Set is '0' to disable autoplay",
+                options: {
+                  min: 0,
+                  max: 1500,
+                  visible: {
+                    keep_data: true,
+                    condition: (data) => {
+                      condition: (data) => data.layout_des === "2";
+                    },
+                  },
+                },
+              },
+              {
+                type: "toggle",
+                name: "au_hover",
+                label: "Pause autoplay on hover",
+                value: true,
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                  visible: {
+                    condition: (data) => data.layout_des === "2",
+                  },
+                },
+              },
+              {
+                type: "line",
+              },
+              {
+                type: "toggle",
+                name: "nav_btn",
+                label: "Use prev next button",
+                value: false,
+                options: {
+                  oneline: true,
+                  values: {
+                    on: {
+                      label: "Yes",
+                      value: true,
+                    },
+                    off: {
+                      label: "No",
+                      value: false,
+                    },
+                  },
+                  
+                },
+              },
+              {
+                  type: "toggle",
+                  name: "head_slide_btn",
+                  label: "Enable navigation button on top",
+                  description : "Only works when tab items is carousel and navigation button enabled. Not works when enabled tabs head button",
+                  options: {
+                      oneline: true,
+                      values: {
+                          on: {
+                              label: "Yes",
+                              value: true
+                          },
+                          off: {
+                              label: "No",
+                              value: false
+                          }
+                      },
+                       visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                  }
+              },
+              {
+                label: "Prev next position",
+                name: "btn_pos",
+                type: "popup",
+                value: "in",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    in: "In content",
+                    out: "Out content",
+                    between: "Content side center",
+                  },
+                 visible: {
+                          condition: (data) => data.nav_btn == true
+                       },
+                  default: false,
+                },
+              },
+              {
+                name: "btn_distance",
+                type: "number",
+                label: "Distance from buttons to boundary",
+                description:
+                  'Only works when "Prev next position is In content". Only works on desktop.',
+                value: 15,
+                options: {
+                  px: {
+                    min: 0,
+                    max: 100,
+                    step: 1,
+                  },
+                  visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                },
+              },
+              {
+                label: "Visible",
+                name: "btn_vi",
+                type: "popup",
+                value: "always",
+                options: {
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    always: "always",
+                    hover: "Only hover",
+                  },
+                  visible: {
+                          condition: (data) => data.nav_btn == true
+                       },
+                  default: false,
+                },
+              },
+              {
+                  label: "Button style",
+                  name: "btn_owl",
+                  type: "popup",
+                  value: "default",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'default': "Default",
+                          'outline': "Outline",
+                          'simple': "Simple"
+                          
+                        },
+                      default: false,
+                      visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                    }
+                },
+                {
+                  label: "Button shape",
+                  name: "btn_shape",
+                  type: "popup",
+                  value: "none",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'none': "Default",
+                          'round': "Round",
+                          'rotate': "Rotate"
+                          
+                        },
+                      default: false,
+                      visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                    }
+                },
+                {
+                  label: "Button color",
+                  name: "btn_cl",
+                  type: "popup",
+                  value: "dark",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'light': "Light",
+                          'dark': "Dark",
+                          'primary': "Primary"
+                          
+                        },
+                      default: false,
+                      visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                    }
+                },
+                {
+                  label: "Buttons size",
+                  name: "btn_size",
+                  type: "popup",
+                  value: "small",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'small': "Small",
+                          'medium': "Medium",
+                          'large': "Large"
+                          
+                        },
+                      default: false,
+                      visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                    }
+                },
+                {
+                  type: "toggle",
+                  name: "btn_hidden_mobile",
+                  label: "Hidden buttons on mobile",
+                  options: {
+                      oneline: true,
+                      values: {
+                          on: {
+                              label: "Yes",
+                              value: true
+                          },
+                          off: {
+                              label: "No",
+                              value: false
+                          }
+                      },
+                      visible: {
+                          condition: (data) => data.nav_btn == true
+                       }
+                  }
+                },
+                {
+                  type: "line",
+                },
+                {
+                  type: "toggle",
+                  name: "nav_dot",
+                  label: "Use page dots",
+                  options: {
+                      oneline: true,
+                      values: {
+                          on: {
+                              label: "Yes",
+                              value: true
+                          },
+                          off: {
+                              label: "No",
+                              value: false
+                          }
+                      }
+                  }
+                },
+                {
+                  label: "Dots style",
+                  name: "dot_owl",
+                  type: "popup",
+                  value: "default",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'default': "Default",
+                          'outline': "Outline",
+                          'elessi': "Elessi",
+                          'br-outline': "Bordered outline"
+                          
+                        },
+                      default: false,
+                     visible: {
+                          condition: (data) => data.nav_dot == true
+                       }
+                    }
+                },
+                {
+                  label: "Dots color",
+                  name: "dots_cl",
+                  type: "popup",
+                  value: "dark",
+                  options: {
+                      preview: "title",
+                      type: "dropdown",
+                      values: {
+                          'light': "Light",
+                          'dark': "Dark",
+                          'primary': "Primary"
+                          
+                        },
+                      default: false,
+                      visible: {
+                          condition: (data) => data.nav_dot == true
+                       }
+                    }
+                },
+                {
+                  type: "toggle",
+                  name: "dots_round",
+                  label: "Enable round dots",
+                  options: {
+                      oneline: true,
+                      values: {
+                          on: {
+                              label: "Yes",
+                              value: true
+                          },
+                          off: {
+                              label: "No",
+                              value: false
+                          }
+                      },
+                      visible: {
+                          condition: (data) => data.nav_dot == true
+                       }
+                  }
+                },
+                {
+                  type: "toggle",
+                  name: "dots_hidden_mobile",
+                  label: "Hidden dots on mobile",
+                  options: {
+                      oneline: true,
+                      values: {
+                          on: {
+                              label: "Yes",
+                              value: true
+                          },
+                          off: {
+                              label: "No",
+                              value: false
+                          }
+                      },
+                      visible: {
+                          condition: (data) => data.nav_dot == true
+                       }
+                  }
+                }
+            ],
+          },
+          {
+            group_title: "Image",
+            params: [
+              {
+                name: "image_ratio",
+                type: "popup",
+                label: "Image ratio",
+                value: "rationt",
+                options: {
+                  default: false,
+                  type: "dropdown",
+                  preview: "title",
+                  values: {
+                    ratioadapt: "Adapt to image",
+                    ratio2_1: "2:1",
+                    ratio16_9: "16:9",
+                    ratio8_5: "8:5",
+                    ratio3_2: "3:2",
+                    ratio4_3: "4:3",
+                    rationt: "Ratio ASOS",
+                    ratio1_1: "1:1",
+                    ratio2_3: "2:3",
+                    ratio1_2: "1:2",
+                  },
+                },
+              },
+              {
+                name: "image_size",
+                type: "popup",
+                label: "Image size",
+                value: "contain",
+                options: {
+                  default: false,
+                  type: "dropdown",
+                  preview: "title",
+                  values: {
+                    cover: "Full",
+                    contain: "Auto",
+                  },
+                  visible: {
+                    condition: (data) => data.image_ratio != "ratioadapt",
+                  },
+                },
+              },
+              {
+                name: "image_position",
+                type: "popup",
+                label: "Image position",
+                value: "8",
+                description:
+                  "The first value is the horizontal position and the second value is the vertical.",
+                options: {
+                  default: true,
+                  type: "dropdown",
+                  preview: "title",
+                  values: {
+                    1: "Left top",
+                    2: "Left center",
+                    3: "Left bottom",
+                    4: "Right top",
+                    5: "Right center",
+                    6: "Right bottom",
+                    7: "Center top",
+                    8: "Center center",
+                    9: "Center bottom",
+                  },
+                  visible: {
+                    condition: (data) => data.image_ratio != "ratioadapt",
+                  },
+                },
+              },
+              {
+                name: "content_align",
+                type: "popup",
+                label: "Product content align",
+                options: {
+                  default: true,
+                  preview: "title",
+                  type: "dropdown",
+                  values: {
+                    center: "Center",
+                  },
+                },
+              },
+            ],
+          },
+        ];
+
+        if (["featured", "shopify"].includes(this.data.template)) {
+          settings[0].params.unshift(
+            {
+              type: "popup",
+              name: "product_source",
+              label: "Product source",
+              options: {
+                type: "dropdown",
+                default: false,
+                values: {
+                  collection: "From collection",
+                  products: "Specific products",
+                  vendor: "Product Vendor",
+                  type: "Product Type",
+                },
+              },
+            },
+            {
+              type: "picker",
+              label: "Select collection to show",
+              name: "collection",
+              options: {
+                type: "collection",
+                multiple: false,
+                visible: (data) =>
+                  !data["product_source"] ||
+                  data["product_source"] == "collection",
+              },
+            },
+            {
+              type: "picker",
+              label: "Select product type to show",
+              name: "product_type",
+              options: {
+                type: "product_type",
+                multiple: false,
+                layout: "list",
+                visible: (data) => data["product_source"] === "type",
+              },
+            },
+            {
+              type: "picker",
+              label: "Select product vendor to show",
+              name: "product_vendor",
+              options: {
+                type: "product_vendor",
+                layout: "list",
+                multiple: false,
+                visible: (data) => data["product_source"] === "vendor",
+              },
+            },
+            {
+              type: "picker",
+              label: "Select products to show",
+              name: "products",
+              options: {
+                type: "product",
+                layout: "grid",
+                multiple: true,
+                visible: (data) => data["product_source"] === "products",
+              },
+              description: `**Notice: ** Specific products has a limit of 20 unique products to show per page. If you want more than 20 products, then consider using a collection instead.`,
+            },
+            {
+              type: "popup",
+              label: "Sort by",
+              name: "sort_by",
+
+              options: {
+                type: "dropdown",
+                icon_type: "sorting",
+                preview: "title",
+                visible: function (data) {
+                  return data["product_source"] !== "products";
+                },
+                values: {
+                  title_asc: "Title A-Z",
+                  title_desc: "Title Z-A",
+                  price_desc: "Hightest price",
+                  price_asc: "Lowest price",
+                  created_at_asc: "Oldest",
+                  created_at_desc: "Newest",
+                },
+              },
+            }
+          );
+        }
+
+        if (this.data.template === "product") {
+          settings[0].params.splice(0, 0, {
+            type: "paragraph",
+            content: `
+                          Show the products related with current product watching.\n
+                          ### List conditions \n
+                          **1. Match with current product type** \n
+                          **2. Match with current product vendor** \n
+                          **3. In same collection with current product**\n`,
+          });
+          settings[0].params.splice(1, 0, {
+            type: "line",
+          });
+          settings[0].params.splice(14, 0, {
+            type: "toggle",
+            name: "show_product_available",
+            value: true,
+            label: "Show product available only",
+            options: {
+              oneline: true,
+              values: {
+                on: {
+                  label: "Yes",
+                  value: true,
+                },
+                off: {
+                  label: "No",
+                  value: false,
+                },
+              },
+            },
+          });
+        }
+
+        return settings;
+      },
+
+      assignItems() {
+        const checkLimit = `
+                        {%- capture limit-%}${
+                          this.data.settings?.limit
+                            ? this.data.settings.limit
+                            : 10
+                        }{% endcapture %}
+                        {%- if limit == blank -%}
+                            {% assign limit = 12 %}
+                        {% else %}
+                            {% assign limit = limit | plus: 0 %}
+                        {%- endif-%}
+                    `;
+
+        if (this.data?.template === "product") {
+          return `
+                            {% assign ecom_related_type = '' %}
+                            {% assign is_collection = false%}
+                            {% assign current_product = product %}
+                                {% if current_product %}
+                                    ${checkLimit}
+                                    {% if recommendations.performed and recommendations.products_count > 0 %}
+                                        {% assign products = recommendations.products ${
+                                          this.data.settings
+                                            ?.show_product_available
+                                            ? ' | where: "available" '
+                                            : ""
+                                        } %}
+                                        {% assign ecom_related_type = 'ecom-product-shopify-related-recommendations' %}
+                                    {% endif %}
+                                    {% if product.type and product.type != blank and products.size < 2 or products == blank %}
+                                        {% assign collection_all = collections.all%}
+                                        {% paginate collection_all.products by 500 %}
+                                        {% assign products = collection_all.products  | where: 'type', product.type  ${
+                                          this.data.settings
+                                            ?.show_product_available
+                                            ? ' | where: "available" '
+                                            : ""
+                                        } %}
+                                        {% endpaginate %}
+                                        {% assign ecom_related_type = 'ecom-product-related-shopify-type' %}
+                                    {% endif %}
+                                    {% if product.vendor and product.vendor != blank and products == blank or products.size < 2%}
+                                        {% assign collection_all = collections.all%}
+                                        {% paginate collection_all.products by 500 %}
+                                            {% assign products = collection_all.products | where: 'vendor', product.vendor ${
+                                              this.data.settings
+                                                ?.show_product_available
+                                                ? ' | where: "available" '
+                                                : ""
+                                            }  %}
+                                        {% endpaginate %}
+                                        {% assign ecom_related_type = 'ecom-product-related-shopify-vendor' %}
+                                    {% endif %}
+                                    {% if product.collections.size > 0 and   products.size < 2 or products == blank %}
+                                        {% for c in product.collections %}
+                                            {% if c.handle == 'all' or c.handle == 'frontpage'  or c.products_count < 1 %}{% continue%}{% endif%}
+                                            {% assign products = c.products  ${
+                                              this.data.settings
+                                                ?.show_product_available
+                                                ? ' | where: "available" '
+                                                : ""
+                                            } %}
+                                            {% assign ecom_related_type = 'ecom-product-related-shopify-collection' %}
+                                            {% assign is_collection = true%}
+                                            {% assign collection = c %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                        `;
+        } else if (this.data?.template === "collection") {
+          return `
+                            ${checkLimit}
+  
+                            {%- if collection != blank -%}
+                                {%- paginate  collection.products by  limit -%}
+                                {% assign products = collection.products  %}
+                                {% assign is_collection = true %}
+  
+                        `;
+        } else {
+          let sort_by = this.data.settings?.sort_by ?? "";
+          let sort_query = "";
+          switch (sort_by) {
+            case "title_asc":
+              sort_query = ' | sort: "title" ';
+              break;
+            case "title_desc":
+              sort_query = ' | sort: "title" | reverse ';
+              break;
+            case "price_asc":
+              sort_query = ' | sort: "price"  ';
+              break;
+            case "price_desc":
+              sort_query = ' | sort: "price" | reverse ';
+              break;
+            case "created_at_asc":
+              sort_query = ' | sort: "created_at"  ';
+              break;
+            case "updated_at_desc":
+              sort_query = ' | sort: "created_at" | reverse ';
+              break;
+            default:
+              break;
+          }
+          if (
+            this.data.settings?.product_source &&
+            this.data.settings.product_source === "products"
+          ) {
+            const products = this.data.settings?.products ?? [];
+            const values = products.map((e) => e.value).join(",");
+            return `
+                            ${checkLimit}
+                            {%- capture handle_products -%}${values}{% endcapture%}
+                            {% assign products = handle_products | strip | split: ',' %}
+                            {% if products.size < 1 and EComBuilderMode %}
+                                {% assign products = collections.all.products  | map: 'handle' | limit: 5 %}
+                            {% endif %}
+                        `;
+          } else if (
+            this.data.settings?.product_source &&
+            ["type", "vendor"].includes(this.data.settings.product_source)
+          ) {
+            let k = "product_" + this.data.settings.product_source;
+            return `
+                                ${checkLimit}
+                                {%- capture value -%}${this.data.settings[k]?.value}{% endcapture%}
+                                {% assign products =  collections.all.products | where: '${this.data.settings.product_source}', value ${sort_query} | limit: limit %}
+  
+                                {% if products.size < 1 and EComBuilderMode %}
+                                    {% assign products = collections.all.products | limit:12 %}
+                                {% endif %}
+                            `;
+          } else if (this.data.settings && this.data.settings?.collection) {
+            return `
+                                ${checkLimit}
+                                {%- capture handle_collection -%}${
+                                  this.data.settings.collection.value
+                                }{% endcapture%}
+                                {% assign collection = collections[handle_collection] %}
+                                {%- if handle_collection  and collection.handle != blank  -%}
+                                    {% assign products = collection.products  ${
+                                      this.data.settings?.show_product_available
+                                        ? ' | where: "available" '
+                                        : ""
+                                    } ${sort_query}%}
+                                {% else %}
+                                    {% assign products = collections.all.products  ${
+                                      this.data.settings?.show_product_available
+                                        ? ' | where: "available" '
+                                        : ""
+                                    } ${sort_query}%}
+                                    {% assign collection = collections.all%}
+                                {%- endif -%}
+                                {% assign is_collection = true %}
+                            `;
+          }
+          return `
+                            ${checkLimit}
+                            {% assign products = collections.last.products %}
+                            {% assign collection = collections.last %}
+                            {% assign is_collection = true %}
+                        `;
+        }
+      },
+      css() {
+        return `
+              .t4s-viewall-btn.ecom-t4s-viewall-btn {
+                  display: flex;
+                  flex-direction: row;
+                  align-content: center;
+                  justify-content: center;
+                  align-items: center;
+              }
+              .ecom-t4s-viewall-btn svg{
+                  width:40px;
+                  height: 40px;
+              }
+              .t4s-viewall-btn-after .t4s-viewall-btn-icon{
+                    order: 1;
+                }
+  
+              `;
+      },
+    },
+    methods: {
+      style() {
+        let style = [
+          {
+            group_name: "products_item",
+            group_title: "Product items",
+            selector: " .t4s-product.t4s-pr-grid",
+            params: [
+              {
+                type: "tab",
+                name: "tab",
+                value: "normal",
+                options: {
+                  tabs: [
+                    {
+                      name: "normal",
+                      title: "Normal",
+                    },
+                    {
+                      name: "hover",
+                      title: "Hover",
+                    },
+                  ],
+                },
+                css: {
+                  isCss: false,
+                },
+              },
+              {
+                name: "backgroundColor",
+                label: "Background",
+                type: "color",
+                options: {
+                  global: {
+                    type: "colors",
+                  },
+                  oneline: true,
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "normal";
+                    },
+                  },
+                },
+                css: {
+                  properties: {
+                    "background-color": "",
+                  },
+                },
+              },
+              {
+                type: "popup",
+                label: "Border",
+                name: "border",
+                options: {
+                  type: "border",
+                  oneline: true,
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "normal";
+                    },
+                  },
+                },
+                css: {},
+              },
+              {
+                type: "popup",
+                label: "Box shadow",
+                name: "boxShadow",
+                options: {
+                  oneline: true,
+                  type: "box-shadow",
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "normal";
+                    },
+                  },
+                },
+                css: {},
+              },
+              {
+                name: "backgroundColorHoverMode",
+                label: "Background",
+                type: "color",
+                options: {
+                  global: {
+                    type: "colors",
+                  },
+                  oneline: true,
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "hover";
+                    },
+                  },
+                },
+                css: {
+                  selector: ":hover",
+                  properties: {
+                    "background-color": "",
+                  },
+                },
+              },
+              {
+                type: "popup",
+                label: "Border",
+                name: "borderHoverMode",
+                options: {
+                  type: "border",
+                  oneline: true,
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "hover";
+                    },
+                  },
+                },
+                css: {
+                  selector: ":hover",
+                },
+              },
+              {
+                type: "popup",
+                label: "Box shadow",
+                name: "boxShadowHoverMode",
+                options: {
+                  oneline: true,
+                  type: "box-shadow",
+                  visible: {
+                    condition: (data) => {
+                      return data["tab"] === "hover";
+                    },
+                  },
+                },
+                css: {
+                  selector: ":hover",
+                },
+              },
+              {
+                name: "transition",
+                type: "number",
+                label:
+                  'Transition Duration <span class="lowercase">(ms)</span>',
+                options: {
+                  min: 0,
+                  max: 1500,
+                  visible: {
+                    keep_data: true,
+                    condition: (data) => {
+                      return data["tab"] === "hover";
+                    },
+                  },
+                },
+                css: {
+                  properties: {
+                    transition: "all %value%ms ease",
+                  },
+                },
+              },
+            ],
+          },
+          {
+            group_alias: "text:hover",
+            options: {
+              group_name: "product_title",
+              group_title: "Title",
+              selector: " .t4s-product-title a",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: [
+                {
+                  position: 1,
+                  fields: {
+                    alias: "text-align",
+                    options: {
+                      label: "Alignment",
+                      css: {
+                        selector: "root .t4s-product-title",
+                      },
+                    },
+                  },
+                },
+                {
+                  position: 10,
+                  fields: [
+                    {
+                      type: "number",
+                      name: "lines_clamp",
+                      label: "Fixed number of lines",
+                      value: 2,
+                      options: {
+                        min: 1,
+                        max: 5,
+                      },
+                      css: {
+                        properties: {
+                          "--ecom-webkit-line-clamp": "",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingNormal",
+                        options: {
+                          visible: (data) => data["tab"] === "normal",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingHover",
+                        options: {
+                          visible: (data) => data["tab"] === "hover",
+                        },
+                        css: {
+                          selector: ":hover",
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price",
+              group_title: "Price",
+              selector: " .t4s-product-price",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: {
+                position: 1,
+                fields: {
+                  alias: "text-align",
+                  options: {
+                    label: "Alignment",
+                    css: {},
+                  },
+                },
+              },
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price_regular",
+              group_title: "Price regular",
+              selector: " .t4s-product-price del",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price_sale",
+              group_title: "Price Sale",
+              selector: " .t4s-product-price ins",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+            },
+          },
+          {
+            group_alias: "button",
+            options: {
+              group_title: "Add to cart button",
+              group_name: "add_to_cart_button",
+              selector: " .t4s-pr-item-btn.t4s-pr-addtocart",
+            },
+          },
+          {
+            group_alias: "button",
+            options: {
+              group_title: "Quick view button",
+              group_name: "quick_view_button",
+              selector: " .t4s-pr-item-btn.t4s-pr-quickview",
+            },
+          },
+        ];
+
+        return style;
+      },
+    },
+  };
+</script>
+</head><body cz-shortcut-listen="true"></body></html>

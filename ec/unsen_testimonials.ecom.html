@@ -1,0 +1,1095 @@
+
+<!-- saved from url=(0120)https://cdn.shopify.com/s/files/1/0657/0013/5154/t/2/assets/unsen_testimonials.ecom.html?v=22988725280296752871675479683 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><template></template>
+  <script>
+  export default {
+    name: "Unsen Testimonials",
+    props: {
+        data: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    },
+    data () {
+        return {
+            editing: false,
+            is: 'heading',
+            editingValue: ''
+        };
+    },
+
+    computed: {
+        requestShopifyType() {
+		  let requires = ["collection", "product"];
+		  if (this.data.template && requires.includes(this.data.template)) {
+			  return {
+				  shopify_type: this.data.template
+			  };
+		  }
+		  return {};
+	    },
+        javascript() {
+			return function () {
+				let $el = this.$el;
+				if(!$el) return;
+				if(!this.isLive && typeof T4SThemeSP != 'undefined' && typeof T4SThemeSP.reinitProductGridItem == 'function') {
+				  T4SThemeSP.reinitProductGridItem();
+				  T4SThemeSP.initCarousel();
+				}
+			}
+	  },
+        settings () {
+            return [
+                {
+                    group_title: "Heading",
+                    selector: " .testimonial-heading",
+                    params:[
+                        {
+                            name: 'design_heading',
+                            type: 'dropdown',
+                            label: 'Heading style',
+                            value:1,
+                            options: {
+                                default: false,
+                                values: {
+                                    '1': 'Design 1',
+                                    '2': 'Design 2',
+                                    '3': 'Design 3',
+                                    '4': 'Design 4',
+                                    '5': 'Design 5',
+                                    '6': 'Design 6'
+                                }
+                            }
+                        },
+                        {
+                            type: 'picker',
+                            label: 'Heading image',
+                            name: 'heading_image',
+                            description: '',
+                            options: {
+                                type: 'image'
+                            }
+                            
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Center align the heading',
+                            name: 'heading_center',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'text',
+                            label: 'Heading',
+                            name: 'top_heading',
+                           
+                            options: {
+                                toolbar: true,
+                                height: 80
+                            }
+                        },
+                        {
+                            type: 'textarea',
+                            label: 'Description',
+                            name: 'top_subheading',
+                            options: {
+                                toolbar: true,
+                                height: 80
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Heading inline',
+                            name: 'heading_inline',
+                            description:'Heading and section content are in a line. Only works on desktop',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'number',
+                            label: 'Bottom space',
+                            name: 'tophead_mb',
+                            description: 'The spacing is between the heading and the content',
+                            options: {
+                                responsive:true,
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,step:1
+                                    }
+                                },
+                               
+                            } 
+                        },
+                        {
+                            name: 'heading_width',
+                            type: 'dropdown',
+                            label: 'Heading content width',
+                            value: 'small',
+                            description:'Only works when enable heading inline',
+                            options: {
+                                default: false,
+                                values: {
+                                    'small': 'Small',
+                                    'medium': 'Medium',
+                                    'large': 'Large',
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    group_title: "Box settings",
+                    params:[
+                        {
+                            name: 'ter_des',
+                            type: 'dropdown',
+                            label: 'Testimonial design',
+                            value: 1,
+                            options: {
+                                default: false,
+                                values: {
+                                    1: 'Design 1',
+                                    2: 'Design 2',
+                                    3: 'Design 3',
+                                    4: 'Design 4',
+                                    5: 'Design 5',
+                                    6: 'Design 6'
+                                }
+                            }
+                        },
+                        {
+                            name: 'content_align',
+                            type: 'dropdown',
+                            label: 'Content align',
+                            value: "start",
+                            options: {
+                                default: false,
+                                values: {
+                                    "start": 'Start',
+                                    "center":"Center"
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Items per row",
+                            name: "col_dk",
+                            value: 3,
+                            options: {
+                                responsive: true,
+                                min: 1,
+                                max: 5,
+                                step: 1
+                            }
+                        },
+                        {
+                            name: 'space_h_item',
+                            type: 'dropdown',
+                            label: 'Space horizontal items',
+                            value: '30',
+                            options: {
+                                responsive: true,
+                                default: false,
+                                values: {
+                                    '0': '1px',
+                                    '2': '2px',
+                                    '4': '3px',
+                                    '6': '6px',
+                                    '8': '8px',
+                                    '10': '10px',
+                                    '15': '15px',
+                                    '20': '20px',
+                                    '25': '25px',
+                                    '30': '30px',
+                                    '40': '40px',
+                                }
+                            }
+                        },
+                        {
+                            name: 'space_v_item',
+                            type: 'dropdown',
+                            label: 'Space vertical items',
+                            value: '30',
+                            options: {
+                                responsive: true,
+                                default: false,
+                                values: {
+                                    '0': '1px',
+                                    '2': '2px',
+                                    '4': '3px',
+                                    '6': '6px',
+                                    '8': '8px',
+                                    '10': '10px',
+                                    '15': '15px',
+                                    '20': '20px',
+                                    '25': '25px',
+                                    '30': '30px',
+                                    '40': '40px',
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Item border radius",
+                            name: "bdr",
+                            options: {
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,
+                                        step: 1
+                                    }
+                                }
+                                
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Item padding",
+                            name: "item_pd",
+                            options: {
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,
+                                        step: 1
+                                    }
+                                }
+                                
+                            }
+                        },
+                        {
+                            name: 'layout_content',
+                            type: 'dropdown',
+                            label: 'Width content',
+                            value: 'width-default',
+                            options: {
+                                default: false,
+                                values: {
+                                    'width-default': 'Default',
+                                    'custom-width': 'Custom width'
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Custom width for content",
+                            name: "custom_width",
+                            description: "Only working when use layout content is \"custom width\" ",
+                            options: {
+                                units: {
+                                    px: {
+                                        min: 700,
+                                        max: 1600,
+                                        step: 10
+                                    }
+                                }
+                                
+                            }
+                        },
+                        {
+                            name: 'layout_des',
+                            type: 'dropdown',
+                            label: 'Layout design',
+                            value: "1",
+                            options: {
+                                default: false,
+                                values: {
+                                    "1": 'Grid',
+                                    "2":"Carousel"
+                                }
+                            }
+                        },
+                        {
+                            type: 'paragraph',
+                            content:'+ Carousel settings'
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Enable loop',
+                            description: 'At the end of cells, wrap-around to the other end for infinite scrolling',
+                            name: 'loop',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Autoplay speed in second(s).",
+                            name: "au_time",
+                            description: "Set is '0' to disable autoplay",
+                            value:0,
+                            options: 
+                            {
+                                min: 0,
+                                max: 30,
+                                step: 0.5
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Pause autoplay on hover',
+                            description: 'Auto-playing will pause when the user hovers over the carousel',
+                            name: 'au_hover',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Enable center slide',
+                            description: 'Support maximun 5 columns. Only working when enable loop and should only be used when has the next slide.',
+                            name: 'center_slide',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Use prev next button',
+                            description: 'Enable previous & next buttons',
+                            name: 'nav_btn',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_pos',
+                            type: 'dropdown',
+                            label: 'Prev next position',
+                            description:'Working on screen Desktop',
+                            value: 'in',
+                            options: {
+                                default: false,
+                                values: {
+                                    'in': 'In content',
+                                    'out': 'Out content',
+                                    'betweent':'Content side center',
+                                    'tophead':'In top heading'
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Distance from buttons to boundary (px)",
+                            name: "btn_distance",
+                            description: "Only works when \"Prev next position is In content\". Only works on desktop.",
+                            options: 
+                            {
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,
+                                        step: 1
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_vi',
+                            type: 'dropdown',
+                            label: 'Visible',
+                            value: 'always',
+                            options: {
+                                default: false,
+                                values: {
+                                    'always': 'Always',
+                                    'hover': 'Only hover'
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_owl',
+                            type: 'dropdown',
+                            label: 'Button style',
+                            options: {
+                                values: {
+                                    "default":"Default",
+                                    'outline': 'Outline',
+                                    'simple': 'Simple'
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_shape',
+                            type: 'dropdown',
+                            label: 'Button shape',
+                            description: 'Not work for \'Simple\' button style',
+                            value: 'none',
+                            options: {
+                                default: false,
+                                values: {
+                                    'none': 'Default',
+                                    'round': 'Round',
+                                    'rotate': 'Rotate'
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_cl',
+                            type: 'dropdown',
+                            label: 'Button color',
+                            value:'dark',
+                            options: {
+                                default: false,
+                                values: {
+                                    'light': 'Light',
+                                    'dark': 'Dark',
+                                    'primary': 'Primary',
+                                    'custom1':'Custom color 1',
+                                    'custom2':'Custom color 2'
+                                }
+                            }
+                        },
+                        {
+                            name: 'btn_size',
+                            type: 'dropdown',
+                            label: 'Button size',
+                            value: 'small',
+                            options: {
+                                default: false,
+                                values: {
+                                    'small': 'Small',
+                                    'medium': 'Medium',
+                                    'large': 'Large',
+                                    'extra_large':'Extra large'
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Hidden buttons on mobile',
+                            name: 'btn_hidden_mobile',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'paragraph',
+                            content:'+ Page dots'
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Use page dots',
+                            description: 'Creates and show page dots',
+                            name: 'nav_dot',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: 'dot_owl',
+                            type: 'dropdown',
+                            label: 'Dots style',
+                            value: 'default',
+                            options: {
+                                default: false,
+                                values: {
+                                    'default':'Default',
+                                    'outline': 'Outline',
+                                    'elessi': 'Elessi',
+                                    'br-outline': 'Bordered outline'
+                                }
+                            }
+                        },
+                        {
+                            name: 'dots_cl',
+                            type: 'dropdown',
+                            label: 'Dots color',
+                            options: {
+                                default: false,
+                                values: {
+                                    'light': 'Light (Best on dark background)',
+                                    'dark': 'dark',
+                                    'primary': 'primary',
+                                    'custom1':'Custom color 1',
+                                    'custom2':'Custom color 2'
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Enable round dots',
+                            name: 'dots_round',
+                            value: true,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Space among dots (px)",
+                            name: "dots_space",
+                            options: 
+                            {
+                                units: {
+                                    px: {
+                                        min: 2,
+                                        max: 20,
+                                        step: 1
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: "number",
+                            label: "Distance from dots to boundary (px)",
+                            name: "dots_bottom_pos",
+                            options: 
+                            {
+                                units: {
+                                    px: {
+                                        min: 0,
+                                        max: 100,
+                                        step: 1
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'toggle',
+                            label: 'Hidden dots on mobile',
+                            name: 'dots_hidden_mobile',
+                            value: false,
+                            options: {
+                                values:{
+                                    on:{
+                                        label: 'Yes',
+                                        value: true
+                                    },
+                                    off: {
+                                        label: 'No',
+                                        value: false
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'paragraph',
+                            content:'+ Layout'
+                        },
+                        {
+                            label: "Layout",
+                            name: "layout",
+                            type: "popup",
+                            value: 't4s-container-wrap',
+                            options: {
+                                preview: "title",
+                                type: "dropdown",
+                                values: {
+                                    't4s-se-container': "Container",
+                                    't4s-container-wrap': "Wrapped container",
+                                    't4s-container-fluid': "Full width"
+                                },
+                                default: false,
+                            }
+                        },
+                    ]
+                },
+                {
+                    group_title: "Testimonials items",
+                    params:[
+                        {
+                            name: "items",
+                            label: "Testimonials items",
+                            type: "group",
+                            value: [],
+                            options: {
+                                add_text: "Add item",
+                                is_clear_all: false
+                            },
+                            params:[
+                                {
+                                    type: 'text',
+                                    label: 'Heading',
+                                    name: 'heading'                                
+                                },
+                                {
+                                    type: 'textarea',
+                                    label: 'Text',
+                                    name: 'content',
+                                    value:"Add customer reviews and testimonials to showcase your store’s happy customers.",
+                                    options: {
+                                        toolbar: true,
+                                        height: 80
+                                    }
+                                },
+                                {
+                                    type: 'picker',
+                                    label: 'Author\'s avata',
+                                    name: 'image_avata',
+                                    options: {
+                                        type: 'image'
+                                    }
+                                },
+                                {
+                                    type: 'text',
+                                    label: 'Author\'s name',
+                                    name: 'title',
+                                    value:'Author name'
+                                },
+                                {
+                                    type: 'text',
+                                    label: 'Position',
+                                    name: 'pos'
+                                },
+                                {
+                                    type: 'number',
+                                    label: 'Rating',
+                                    name: 'rating',
+                                    description: "Set less than '1' to disable Rating.",
+                                    options: {
+                                        slider:true,
+                                        input:false,
+                                        min: 0,
+                                        max: 5,
+                                        step:0.5
+                                    }
+                                },
+                                {
+                                    type: 'picker',
+                                    label: 'Product',
+                                    name: 'product',
+                                    options: {
+                                        type: 'product'
+                                    }
+                                    
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ];
+        },
+        
+        liquids() {
+            const se_stts = this?.data?.settings
+            const se_style = this?.data?.style?.color
+            console.log(se_stts)
+            console.log(se_style)
+            const top_heading = se_stts?.top_heading || ''
+            const top_subheading =  se_stts?.top_subheading || ''
+            const design_heading = se_stts?.design_heading || 1
+            const heading_center = se_stts?.heading_center 
+            const heading_image = se_stts?.heading_image || ''
+            const get_height = true
+            const heading = `
+                ${(top_heading.length > 0 || top_subheading.length >0) ? `                    
+                    {{ 'top-head.css' | asset_url | stylesheet_tag }}
+                    <div class="t4s-top-heading t4s_des_title_${design_heading} ${heading_center ? ` t4s-text-center` :''} ${top_subheading ? ` t4s-has-section-des` :''}" ${get_height ? 'data-get-height' :''} style="--tophead-mb: ${se_stts?.tophead_mb};--tophead-mb-tb: ${se_stts?.tophead_mb__tablet};--tophead-mb-mb: ${se_stts?.tophead_mb__mobile};">
+                        ${heading_image? `<div class="t4s-heading-image"> <img class="lazyloadt4s t4s-lz--fadeIn" data-src="${heading_image.value}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></div>`:''}
+                        ${top_heading.length >0 ? `<h3 class="t4s-section-title t4s-title"><span>${top_heading}</span></h3>`:''}
+                        ${design_heading == "3"?
+                            `<div class="t4s-heading-char t4s-d-flex ${heading_center ? `t4s-justify-content-center` :''}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="118 82.1 385.5 42">
+                                    <path class="st0" d="M483.1,100.9c-4.1,8.2-7,13.2-11.7,13.2c-4.6,0-7.5-5-11.7-13.3c-4.2-8.3-9.5-18.7-20.6-18.7  c-11.1,0-16.4,10.4-20.6,18.8c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.4,10.4-20.6,18.8  c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.5,13.2  c-4.6,0-7.4-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8v10c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.5,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.5-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8  c11.1,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8s16.3-10.4,20.6-18.8  c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.5,18.8,20.6,18.8c11.2,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.7-13.2  v-10C492.5,82.1,487.3,92.5,483.1,100.9z"/>
+                                </svg>
+                            </div>`
+                        :''}
+                        ${top_subheading? `<span class="t4s-section-des t4s-subtitle">${top_subheading}`:''}
+                    </div>`
+                : ''}
+            `
+            const itemTestimonial = se_stts.items.map((item,index)=>{
+                return `
+                    <div class="t4s-col-item t4s-testimonial-item" id="b_${index}testimonial" data-select-flickity>
+                        <div class="t4s-testimonial-wrap">
+                            ${se_stts?.ter_des == '5'?`<svg class="t4s-quote-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://svg.com/svg" version="1.1" width="48" height="40" x="0" y="0" viewBox="0 0 512 512" style="enable-background: new 0 0 512 512" xml:space="preserve"><g><path xmlns="http://www.w3.org/2000/svg" d="m221 93.5h-140c-11.028 0-20 8.972-20 20v130c0 11.028 8.972 20 20 20h82.865c-9.372 45.993-50.458 80-97.865 80-2.761 0-5 2.238-5 5v65c0 2.762 2.239 5 5 5 96.495 0 175-78.505 175-175v-130c0-11.028-8.972-20-20-20zm10 150c0 89.31-71.321 162.274-160 164.926v-55.039c24.82-1.129 48.548-10.633 67.293-27.052 19.792-17.335 32.74-41.174 36.461-67.125.206-1.436-.221-2.89-1.171-3.985-.95-1.096-2.329-1.725-3.778-1.725h-88.805c-5.514 0-10-4.486-10-10v-130c0-5.514 4.486-10 10-10h140c5.514 0 10 4.486 10 10zm200-150h-140c-11.028 0-20 8.972-20 20v130c0 11.028 8.972 20 20 20h82.869c-9.372 45.993-50.459 80-97.869 80-2.762 0-5 2.238-5 5v65c0 2.762 2.238 5 5 5 96.495 0 175-78.505 175-175v-130c0-11.028-8.971-20-20-20zm10 150c0 89.31-71.321 162.274-160 164.926v-55.039c24.82-1.128 48.549-10.633 67.295-27.052 19.793-17.335 32.742-41.174 36.463-67.125.206-1.436-.222-2.89-1.171-3.985-.95-1.096-2.328-1.725-3.778-1.725h-88.809c-5.514 0-10-4.486-10-10v-130c0-5.514 4.486-10 10-10h140c5.514 0 10 4.486 10 10z" fill="#000000" data-original="#000000"></path></g></svg>`:''}
+                            {%- render 'rating_star',rating: ${item.rating} -%}
+                            ${item.heading.length > 0?`<h3 class="t4s-testimonial-heading"> ${item.heading}</h3>`:''}
+                            ${item.content.length > 0?`<div class="t4s-testimonial-content"> ${item.content}</div>`:''}
+                            <div class="t4s-testimonial-author">
+                                ${item.image_avata?`<div class="t4s-testimonial-avatar lazyloadt4s" data-bgset="${item.image_avata.value}" data-sizes="auto"  data-optimumx="1.5" style="background-image: url(${item.image_avata.value};"></div>`:''}
+                                <div class="t4s-author-metas">
+                                    ${item.title.length > 0?`<div class="t4s-testimonial-name">${item.title}</div>`:''}
+                                    ${item.title.length >0?`<div class="t4s-testimonial-position">{{ bk_stts.pos }}</div>`:''}
+                                </div>
+                            </div>
+                            ${item.product ? `
+                                {%liquid
+                                    assign product = all_products['${item.product.value}']
+                                    assign image = product.featured_media | default: settings.placeholder_img
+                                    assign pr_url = product.url
+                                %}
+                                <div class="t4s-testimonial-product t4s_ratioadapt  t4s_position_8 t4s_cover">
+                                    <div class="t4s-row t4s-space-item-inner t4s-widget__pr">
+                                        <div class="t4s-col-item t4s-widget_img_pr">
+                                            {%- if image != blank -%}
+                                                <a class="t4s-d-block t4s-pr t4s-oh t4s_ratio" href="{{ pr_url }}"style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }}">
+                                                    <img data-main-img-change class="lazyloadt4s" data-src="{{ image | image_url: width: 1 }}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="{{ image.width }}" height="{{ image.height }}" alt="{{ image.alt | escape }}">
+                                                    <span class="lazyloadt4s-loader is-bg-img" style="background: url({{ image | image_url: width: 1 }});"></span>
+                                                </a>
+                                            {%- endif -%} 
+                                        </div>
+                                        <div class="t4s-col-item t4s-col t4s-widget_if_pr">
+                                            {% if rating_pos == "1" %}
+                                            {%- render 'product-rating', product: product, app_review: app_review -%}
+                                            {% endif %}
+                                            <a href="{{ pr_url }}" class="t4s-d-block t4s-widget__pr-title">{{ product.title }}</a>
+                                            {%- render 'product-price', class_price: 't4s-widget__pr-price', product: product, price_varies_style: price_varies_style, type: 'card', isGrouped: false -%}
+                                            {% if rating_pos == "2" %}
+                                            {%- render 'product-rating', product: product, app_review: app_review -%}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                            : null}
+                            
+                        </div>
+                    </div>`
+            }).join("")
+            
+            return {
+                'testimonials': {
+                    code:`
+                        {{ 'testimonials.css' | asset_url | stylesheet_tag }}
+                        {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+                        {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+                        <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                        {%- liquid
+                            assign sid = '${this.data.id}'
+                            assign stt_layout = '${se_stts?.layout}'
+                            if stt_layout == 't4s-se-container' 
+                                assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+                            elsif stt_layout == 'stretch'
+                                assign html_layout = '<div class="t4s-container is--t4s-stretch">__</div></div>' | split: '__'
+                                assign stt_layout  = 't4s-se-container'
+                            elsif stt_layout == 't4s-container-wrap'
+                                assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+                            else
+                                assign html_layout = '__' | split: '__'
+                            endif
+                        -%}
+                        <div class="t4s-section-inner t4s-section-inline-${se_stts?.heading_inline}" t4s_nt_se_{{ sid }} t4s_se_{{ sid }} {{ stt_layout }}{% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5"{% endif %} {% render 'section_style', se_stts: se_stts -%} >
+                            {{- html_layout[0] -}}
+                            {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner{% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s{% endif %}" {% if stt_image_bg != blank %} data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto" data-optimumx="1.5"{% endif %}>{% endif -%}
+                            ${se_stts?.heading_inline ? `<div class="t4s-section-inline-inner t4s-heading-width-${se_stts.heading_width}">`:''}
+                            <div class="t4s-section-head">
+                                ${heading}
+                            </div>
+                            <div class="t4s-section-content t4s-list-testimonials t4s-testimonial-des-${se_stts?.ter_des} t4s-text-${se_stts?.content_align} t4s-pr t4s-head-slide-nav-${se_stts?.btn_pos == 'tophead' ? true : false}" style="--pd-head-lr: 0px;--head-mgb: ${se_stts?.tophead_mb};--head-mgb-tb: ${se_stts?.tophead_mb__tablet};--head-mgb-mb: ${se_stts?.tophead_mb__mobile};--cl-name: ${se_style?.cl_name};--cl-content: ${se_style?.cl_content};--bd-cl: ${se_style?.cl_bd};--bg-cl: ${se_style?.cl_bg_item};--rating-cl: ${se_style?.rating_cl};--bdr: ${se_stts.bdr};--item-pd:${se_stts.item_pd};--content-width:${se_stts.custom_width}">
+                                ${se_stts?.layout_des == '1' ?
+                                    `<div class="t4s-content-${se_stts?.layout_content} t4s-row t4s-row-cols-lg-${se_stts?.col_dk} t4s-row-cols-md-${se_stts?.col_dk__tablet} t4s-row-cols-${se_stts?.col_dk__mobile} t4s-gx-lg-${se_stts?.space_h_item} t4s-gy-lg-${se_stts?.space_v_item} t4s-gx-md-${se_stts?.space_h_item__tablet} t4s-gy-md-${se_stts?.space_v_item__tablet} t4s-gx-${se_stts?.space_h_item__mobile} t4s-gy-${se_stts?.space_v_item__mobile}">`:
+                                    `<div class="t4s-content-${se_stts?.layout_content} t4s-flickity-slider flickityt4s ${se_stts?.center_slide ? `is-carousel-center`:''} t4s-row t4s-row-cols-lg-${se_stts?.col_dk} t4s-row-cols-md-${se_stts?.col_dk__tablet} t4s-row-cols-${se_stts?.col_dk__mobile} t4s-gx-lg-${se_stts?.space_h_item} t4s-gy-lg-${se_stts?.space_v_item} t4s-gx-md-${se_stts?.space_h_item__tablet} t4s-gy-md-${se_stts?.space_v_item__tablet} t4s-gx-${se_stts?.space_h_item__mobile} t4s-gy-${se_stts?.space_v_item__mobile} ${se_stts?.nav_btn ?`t4s-slider-btn__${se_stts?.btn_pos}-content t4s-slider-btn-style-${se_stts?.btn_owl} t4s-slider-btn-${se_stts?.btn_shape} t4s-slider-btn-${se_stts?.btn_size } t4s-slider-btn-cl-${se_stts?.btn_cl} t4s-slider-btn-vi-${se_stts?.btn_vi} t4s-slider-btn-hidden-mobile-${se_stts?.btn_hidden_mobile}`:''} ${se_stts?.nav_dot ?`t4s-dots-style-${se_stts?.dot_owl} t4s-dots-cl-${se_stts?.dots_cl} t4s-dots-round-${se_stts?.dots_round} t4s-dots-hidden-mobile-${se_stts?.dots_hidden_mobile}`:'' } " data-flickityt4s-js='{"setPrevNextButtons": true,"arrowIcon": "2","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","centerSlide": ${se_stts?.center_slide},"wrapAround": ${se_stts?.loop},"prevNextButtons": ${se_stts?.nav_btn},"percentPosition": 1,"pageDots": ${se_stts?.nav_dot},"autoPlay": ${se_stts?.au_time * 1000}, "pauseAutoPlayOnHover" : ${se_stts?.au_hover}}' style="--btn-distance: ${se_stts?.btn_distance};--space-dots: ${se_stts?.dots_space}">`}
+                                        ${itemTestimonial}
+                                    </div>             
+                            </div>
+                            ${se_stts?.heading_inline ? `</div>`:''}
+                            <div class="t4s-d-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <symbol id="t4s_star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M329.6 176H488C498.3 176 507.4 182.5 510.7 192.2C514 201.9 510.8 212.6 502.7 218.9L371.9 320.7L422.9 480.7C426.1 490.7 422.4 501.7 413.7 507.7C405.1 513.7 393.6 513.4 385.3 506.9L256 406.4L126.7 506.9C118.4 513.4 106.9 513.7 98.27 507.7C89.65 501.7 85.94 490.7 89.13 480.7L140.1 320.7L9.267 218.9C1.174 212.6-2.027 201.9 1.3 192.2C4.628 182.5 13.75 176 24 176H182.5L233.1 16.72C236.3 6.764 245.6 0 256 0C266.5 0 275.7 6.764 278.9 16.72L329.6 176z"/></svg></symbol>
+                                    <symbol id="t4s_star_half"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.1 16.72C236.3 6.764 245.5 .0006 256 0V406.4L126.7 506.9C118.4 513.4 106.9 513.7 98.27 507.7C89.65 501.7 85.94 490.7 89.13 480.7L140.1 320.7L9.267 218.9C1.174 212.6-2.027 201.9 1.3 192.2C4.628 182.5 13.75 175.1 24 175.1H182.5L233.1 16.72z"/><path class="t4s-star-emty" d="M278.9 16.72C275.7 6.764 266.5 .0006 255.1 0V406.4L385.3 506.9C393.6 513.4 405.1 513.7 413.7 507.7C422.4 501.7 426.1 490.7 422.9 480.7L371.9 320.7L502.7 218.9C510.8 212.6 514 201.9 510.7 192.2C507.4 182.5 498.3 175.1 488 175.1H329.5L278.9 16.72z"/></svg></symbol>
+                                </svg>
+                                <style>path.t4s-star-emty {fill: #dedede;} </style>
+                            </div>
+                            {{- html_layout[1] -}}
+                        </div>
+                    `,
+                    preview: ``
+                }
+            }
+        },
+  
+        style() {
+            return [
+                {
+
+                        group_name: "color",
+                        group_title: "Color",
+                        params:[
+                            {
+                                type: 'color',
+                                label: 'Color heading/name',
+                                name: 'cl_name',
+                                oneline: true,
+                                value:'#222222',
+                                options: {
+                                    global: {
+                                        type: 'colors'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'color',
+                                label: 'Color content/position',
+                                name: 'cl_content',
+                                oneline: true,
+                                value:'#878787',
+                                options: {
+                                    global: {
+                                        type: 'colors'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'color',
+                                label: 'Color border/box shadow',
+                                name: 'cl_bd',
+                                oneline: true,
+                                value:'#eaeaea',
+                                options: {
+                                    global: {
+                                        type: 'colors'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'color',
+                                label: 'Background item',
+                                name: 'cl_bg_item',
+                                oneline: true,
+                                value:'#ffffff',
+                                options: {
+                                    global: {
+                                        type: 'colors'
+                                    }
+                                }
+                            },
+                            {
+                                type: 'color',
+                                label: 'Rating color',
+                                name: 'rating_cl',
+                                oneline: true,
+                                value:'#FEC42D',
+                                options: {
+                                    global: {
+                                        type: 'colors'
+                                    }
+                                }
+                            }
+                        ]
+                    
+                }
+            ];
+        },
+  
+        heading () {
+            return this.data;
+        },
+  
+        activeMe () {
+            return (this.editingElement?.data?.id ?? 0) === this.heading.id;
+        },
+  
+        default() {
+            return {
+                settings: {
+                    design_heading: 1,
+                    heading_center: false,
+                    top_heading: "Happy <br><font color=\"#000000\">Customers</font>",
+                    heading_inline: false,
+                    heading_width: "small",
+                    ter_des: "4",
+                    content_align: "start",
+                    col_dk: 3,
+                    space_h_item: "30",
+                    space_v_item: "30",
+                    layout_content: "width-default",
+                    layout_des: "2",
+                    loop: true,
+                    au_time: 0,
+                    au_hover: true,
+                    center_slide: false,
+                    nav_btn: true,
+                    btn_pos: "tophead",
+                    btn_vi: "always",
+                    btn_shape: "round",
+                    btn_cl: "custom2",
+                    btn_size: "small",
+                    btn_hidden_mobile: false,
+                    nav_dot: false,
+                    dot_owl: "default",
+                    dots_round: true,
+                    dots_hidden_mobile: false,
+                    layout: "t4s-container-wrap",
+                    items: [
+                    {
+                        heading: "Makes me happy",
+                        content: "The colour, fabric, size and comfort.  It add colour and a little bit of sunshine to our living room.  Now we are all fighting how who the chair belongs to!",
+                        title: "Jesicca  A.",
+                        product: {
+                        name: "Adilette Slide Sandal",
+                        url: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Adilette-Slide-Sandal_01.webp?v=1673337682",
+                        value: "adilette-slide-sandal",
+                        thumbnail: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Adilette-Slide-Sandal_01.webp?v=1673337682&width=500&height=500&crop=center"
+                        },
+                        rating: 5
+                    },
+                    {
+                        heading: "Best Services !",
+                        content: "The colour, fabric, size and comfort.  It add colour and a little bit of sunshine to our living room.  Now we are all fighting how who the chair belongs to!",
+                        title: "Anna  C.",
+                        product: {
+                        name: "Pieces Short Sleeve Sweater",
+                        url: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Pieces-short-sleeve-sweater_01.webp?v=1673337564",
+                        value: "pieces-short-sleeve-sweater",
+                        thumbnail: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Pieces-short-sleeve-sweater_01.webp?v=1673337564&width=500&height=500&crop=center"
+                        },
+                        rating: 5
+                    },
+                    {
+                        heading: "Prety Colthing",
+                        content: "The colour, fabric, size and comfort.  It add colour and a little bit of sunshine to our living room.  Now we are all fighting how who the chair belongs to!",
+                        title: "Jared S.",
+                        product: {
+                        name: "Butterfly Charm Hoop Earrings",
+                        url: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Butterfly-Charm-Hoop-Earring_yellow.webp?v=1673337654",
+                        value: "butterfly-charm-hoop-earrings",
+                        thumbnail: "https://cdn.shopify.com/s/files/1/0705/1572/0492/products/Butterfly-Charm-Hoop-Earring_yellow.webp?v=1673337654&width=500&height=500&crop=center"
+                        },
+                        rating: 5
+                    }
+                    ],
+                    content: "Enter your heading",
+                    tag: "h2",
+                    btn_distance: "15px",
+                    btn_owl: "default",
+                    dots_space: "15px",
+                    dots_bottom_pos: "10px",
+                    tophead_mb: "60px",
+                    tophead_mb__tablet: "30px",
+                    tophead_mb__mobile: "30px"
+                },
+                style: {
+                    color: {
+                        cl_name: "#222222",
+                        cl_content: "#878787",
+                        cl_bd: "#eaeaea",
+                        cl_bg_item: "#fff",
+                        rating_cl: "#FEC42D"
+                    },
+                        text: {
+                        textTextAlign: "left"
+                    }
+                }
+            }
+        },
+        css() {
+          return `
+                  
+              `;
+        }
+  
+    },
+    watch: {
+        activeMe (val) {
+            if (!val && this.editing === true) {
+                this.editing = false;
+                this.heading.settings.content = this.$refs.content.innerHTML;
+            }
+        }
+    },
+    methods: {
+        edit() {
+            if (this.editing === false) {
+                this.editing = true;
+                this.editingValue = this.data.settings.content;
+            }
+        },
+        update(e) {
+            if (
+                this.editing
+            ) {
+                this.heading.settings.content = e.target.innerHTML;
+            }
+        },
+  
+    }
+  
+  }
+  </script></head><body cz-shortcut-listen="true"></body></html>

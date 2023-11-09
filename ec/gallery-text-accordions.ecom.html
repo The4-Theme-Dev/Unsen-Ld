@@ -1,0 +1,612 @@
+
+<!-- saved from url=(0125)https://cdn.shopify.com/s/files/1/0657/0013/5154/t/2/assets/gallery-text-accordions.ecom.html?v=26417197930614795281675936002 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><template></template>
+
+<script>
+
+  export default {
+    name: "Gallery Text Accordions",
+    props: {
+        data: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    },
+    data () {
+        return {
+            jsreactives: ['items']
+        };
+    },
+    computed: {
+      requestShopifyType() {
+          let requires = ["collection", "product"];
+          if (this.data.template && requires.includes(this.data.template)) {
+              return {
+                  shopify_type: this.data.template
+              };
+          }
+          return {};
+      },
+      javascript() {
+            return function () {
+                let $el = this.$el;
+                if(!$el) return;
+                if(!this.isLive && typeof T4SThemeSP != 'undefined' && typeof T4SThemeSP.reinitProductGridItem == 'function') {
+                  T4SThemeSP.reinitProductGridItem();
+                }
+            }
+      },
+      se_stts() {
+        return this.data.settings;
+      },
+      itemxxx() {
+        console.log(this.data?.settings?.items) 
+        return true;
+      },
+
+      itemList() {
+          console.log(this.data?.settings?.items)
+            return this.data?.settings?.items.map((item, index)=> {
+                    return `
+      
+                      <div class="t4s-gallery-txt-accordions t4s-pr t4s-col-item t4s-col-10 t4s-col-md {% if first_item %} is--hover{% assign first_item = false %}{% endif %}" style="--bg-overlay: {{ bg_overlay }};" data-hover-t4s data-has-group>
+                        <${ item.banner_link ?  `a href="${item.banner_link.href}"` : `div` } class="t4s-gallery-txt-accordions-inner t4s-pr t4s-oh t4s_position_8 t4s_ratioadapt t4s_cover" style="--aspect-ratioapt: {{ image.aspect_ratio | default: 1 }};">
+                              <div class="t4s-gallery-txt-img t4s-pr t4s-oh t4s-d-block t4s_ratio t4s-bg-11" style="--cl-label: #000;background: url(${item.image?.value});background-position: top center;">
+                                ${ item.label_text ?
+                                `<h3 class="gallery-with-text-label t4s-not-style">${item.label_text}</h3>`
+                                : ''
+                                }
+                              </div>
+                          <div class="gallery-text-content t4s-content-position t4s-pa" style="{%- render 'content_position', ch_pos: ${this.data.settings?.ch_pos} , cv_pos: ${this.data.settings?.cv_pos} , ch_pos_tb: ${this.data.settings?.ch_pos__tablet} , cv_pos_tb: ${this.data.settings?.cv_pos__tablet} , ch_pos_mb: ${this.data.settings?.ch_pos__mobile} , cv_pos_mb: ${this.data.settings?.cv_pos__mobile} -%}"> 
+                          
+                              ${ item.heading ?
+                                `<h3 class="t4s-txt-accordions-heading">${item.heading}</h3>`
+                                : ''
+                              }
+
+                              ${ item.subheading ?
+                                `<h3 class="t4s-txt-accordions-subheading">${item.subheading}</h3>`
+                                : ''
+                              }
+                              ${ item.button ?
+                                `<a class="t4s-txt-accordions-button" href="${item.button?.link?.href}">
+                                   ${ item.button?.content ?
+                                      `<span class="t4s-txt-accordions-button--text">${item.button?.content}</span>`
+                                      : ''
+                                    }
+                                    ${ item.button?.icon ?
+                                      `<span class="t4s-txt-accordions-button--icon">${item.button?.icon}</span>`
+                                      : ''
+                                    }
+                                  
+                                  
+                                </a>`
+                                : ''
+                              }
+                          </div>
+                        </${ item.banner_link ?  `a` : `div` }>
+                      </div>
+                    `
+                }).join("")
+            ;
+        },
+      liquids() {
+        return {
+          gallery_text_accordions: {
+            code: `
+              <!-- sections/custom-section.liquid -->
+              {{ 'section.css' | asset_url | stylesheet_tag }}
+              {{ 'content-position.css' | asset_url | stylesheet_tag }}
+              {{ 'gallery-text-accordions.css' | asset_url | stylesheet_tag }}
+              <link href="{{ 't4s-animation.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+              {%- liquid
+                  assign sid = '${this.data.id}'
+                  assign stt_layout = '${this.data.settings?.layout}'
+              -%}
+              {%- liquid
+                assign sid = section.id
+                assign se_stts = section.settings
+                assign se_blocks = section.blocks
+                if stt_layout == 't4s-se-container' 
+                  assign html_layout = '<div class="t4s-container">__</div></div>' | split: '__'
+                elsif stt_layout == 't4s-container-wrap'
+                  assign html_layout = '<div class="t4s-container">__</div>' | split: '__'
+                else
+                  assign html_layout = '__' | split: '__'
+                endif
+                assign no_image_parent = true
+                assign first_item = true
+                -%}
+              <div class="t4s-section-inner t4s_se_{{ sid }} {{ stt_layout }} {%- if stt_image_bg != blank and stt_layout != 't4s-se-container' -%}  t4s-has-imgbg lazyloadt4s {%- endif -%}"  {% if stt_image_bg != blank and stt_layout != 't4s-se-container' %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {% endif %} {% render 'section_style', se_stts: se_stts %}>
+                {{- html_layout[0] -}}
+                {%- if stt_layout == 't4s-se-container' -%}<div class="t4s-container-inner {% if stt_image_bg != blank %} t4s-has-imgbg lazyloadt4s {% endif %}"  {% if stt_image_bg != blank %}  data-bgset="{{ stt_image_bg | image_url: width: 1 }}" data-sizes="auto"  data-optimumx="1.5" {% endif %}> {%- endif -%} 
+                <div class="t4s-gallery-txt-accordions-wrap t4s-row t4s-gx-0 carousel-disable-md t4s-flickity-slider flickityt4s" data-flickityt4s-js='{"watchCSS": 1,"setPrevNextButtons": false,"arrowIcon": "1","imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": false,"prevNextButtons": false,"percentPosition": 1,"pageDots": false, "autoPlay" : false, "pauseAutoPlayOnHover" : true }' style="--height-dk: ${this.data.settings?.height_dk}px;--height-tb: ${this.data.settings?.height_dk__tablet}px;--height-mb: ${this.data.settings?.height_dk__mobile}px"> 
+                  ${this.itemList}
+                </div>
+                {{- html_layout[1] -}}
+              </div>`
+              ,
+            preview: ''
+                      
+          }
+        }
+      },
+      settings() {
+        const settings = [
+          {
+            group_title: 'Gerenal',
+            params:[
+              {
+                name: "height_dk",
+                type: "number",
+                label: 'Section height',
+                value: 500,
+                options: {
+                    responsive: true,
+                    min: 0,
+                    max: 1500
+                }
+              },
+              {
+                  type: 'number',
+                  label: 'Content vertical position x(%)',
+                  name: 'cv_pos',
+                  description: '',
+                  value: 50,
+                  options: {
+                      responsive: true,
+                      units: {
+                          '%': {
+                              min: 0,
+                              max: 100
+                          }
+                      },
+                      slider: true,
+                      input: true,
+                      min: 0,
+                      max: 100
+                  }
+                  
+              },
+              {
+                  type: 'number',
+                  label: 'Content horizontal position (%)',
+                  name: 'ch_pos',
+                  description: '',
+                  value: 50,
+                  options: {
+                      responsive: true,
+                      units: {
+                          '%': {
+                              min: 0,
+                              max: 100
+                          }
+                      },
+                      slider: true,
+                      input: true,
+                      min: 0,
+                      max: 100
+                  }
+                  
+              },
+              {
+                name: "items",
+                label: "Gallery Items",
+                type: "group",
+                options: {
+                    add_text: "Add item",
+                    is_clear_all: false
+                },
+                params: [
+
+                    {
+                      type: 'text',
+                      label: 'Label text',
+                      name: 'label_text',
+                      description: '',
+                      value: 'SHOP MEN'
+                    },
+                    {
+                      type: 'text',
+                      label: 'Heading',
+                      name: 'heading',
+                      description: '',
+                      value: 'GARMENTS AND COLLEGIATE'
+                    },
+                    {
+                        type: 'text',
+                        label: 'Subheading',
+                        name: 'subheading',
+                        description: '',
+                        value: 'Looking for ...'
+                    },
+                    {
+                      type: 'picker',
+                      label: 'Choose Image',
+                      name: 'image',
+                      options: {
+                          responsive: true,
+                          type: 'image',
+                          editAlt: true
+                      }
+                    },
+                    {
+                      "type": "link",
+                      "name": "banner_link",
+                      "label": "Banner link",
+                      "options": { }
+                    },
+                    {
+                      group_alias:'button:settings',
+                      options:{
+                          group_name:'button',
+                          group_title:'Button'
+                      },
+                      modify: {
+
+                      }
+                    }
+                ]
+              }
+
+            ]
+          }
+        ];
+
+        if (this.data.template === "product") {
+            settings[0].params.splice(0, 0, {
+                type: "paragraph",
+                content: `
+                    Show the products related with current product watching.\n
+                    ### List conditions \n
+                    **1. Match with current product type** \n
+                    **2. Match with current product vendor** \n
+                    **3. In same collection with current product**\n`
+            });
+            settings[0].params.splice(1, 0, {
+                type: "line"
+            });
+            settings[0].params.splice(14, 0, {
+                type: "toggle",
+                name: "show_product_available",
+                value: true,
+                label: "Show product available only",
+                options: {
+                    oneline: true,
+                    values: {
+                        on: {
+                            label: "Yes",
+                            value: true
+                        },
+                        off: {
+                            label: "No",
+                            value: false
+                        }
+                    }
+                }
+            });
+        }
+
+        return settings;
+      },
+
+
+      assignItems() {
+          const checkLimit = `
+                  {%- capture limit-%}${
+                      this.data.settings?.limit ? this.data.settings.limit : 10
+                  }{% endcapture %}
+                  {%- if limit == blank -%}
+                      {% assign limit = 12 %}
+                  {% else %}
+                      {% assign limit = limit | plus: 0 %}
+                  {%- endif-%}
+              `;
+
+          if (this.data?.template === "product") {
+              return `
+                      {% assign ecom_related_type = '' %}
+                      {% assign is_collection = false%}
+                      {% assign current_product = product %}
+                          {% if current_product %}
+                              ${checkLimit}
+                              {% if recommendations.performed and recommendations.products_count > 0 %}
+                                  {% assign products = recommendations.products ${
+                                      this.data.settings?.show_product_available
+                                          ? ' | where: "available" '
+                                          : ""
+                                  } %}
+                                  {% assign ecom_related_type = 'ecom-product-shopify-related-recommendations' %}
+                              {% endif %}
+                              {% if product.type and product.type != blank and products.size < 2 or products == blank %}
+                                  {% assign collection_all = collections.all%}
+                                  {% paginate collection_all.products by 500 %}
+                                  {% assign products = collection_all.products  | where: 'type', product.type  ${
+                                      this.data.settings?.show_product_available
+                                          ? ' | where: "available" '
+                                          : ""
+                                  } %}
+                                  {% endpaginate %}
+                                  {% assign ecom_related_type = 'ecom-product-related-shopify-type' %}
+                              {% endif %}
+                              {% if product.vendor and product.vendor != blank and products == blank or products.size < 2%}
+                                  {% assign collection_all = collections.all%}
+                                  {% paginate collection_all.products by 500 %}
+                                      {% assign products = collection_all.products | where: 'vendor', product.vendor ${
+                                          this.data.settings?.show_product_available
+                                              ? ' | where: "available" '
+                                              : ""
+                                      }  %}
+                                  {% endpaginate %}
+                                  {% assign ecom_related_type = 'ecom-product-related-shopify-vendor' %}
+                              {% endif %}
+                              {% if product.collections.size > 0 and   products.size < 2 or products == blank %}
+                                  {% for c in product.collections %}
+                                      {% if c.handle == 'all' or c.handle == 'frontpage'  or c.products_count < 1 %}{% continue%}{% endif%}
+                                      {% assign products = c.products  ${
+                                          this.data.settings?.show_product_available
+                                              ? ' | where: "available" '
+                                              : ""
+                                      } %}
+                                      {% assign ecom_related_type = 'ecom-product-related-shopify-collection' %}
+                                      {% assign is_collection = true%}
+                                      {% assign collection = c %}
+                                  {% endfor %}
+                              {% endif %}
+                          {% endif %}
+                  `;
+          } else if (this.data?.template === "collection") {
+              return `
+                      ${checkLimit}
+
+                      {%- if collection != blank -%}
+                          {%- paginate  collection.products by  limit -%}
+                          {% assign products = collection.products  %}
+                          {% assign is_collection = true %}
+
+                  `;
+          } else {
+              let sort_by = this.data.settings?.sort_by ?? "";
+              let sort_query = "";
+              switch (sort_by) {
+                  case "title_asc":
+                      sort_query = ' | sort: "title" ';
+                      break;
+                  case "title_desc":
+                      sort_query = ' | sort: "title" | reverse ';
+                      break;
+                  case "price_asc":
+                      sort_query = ' | sort: "price"  ';
+                      break;
+                  case "price_desc":
+                      sort_query = ' | sort: "price" | reverse ';
+                      break;
+                  case "created_at_asc":
+                      sort_query = ' | sort: "created_at"  ';
+                      break;
+                  case "updated_at_desc":
+                      sort_query = ' | sort: "created_at" | reverse ';
+                      break;
+                  default:
+                      break;
+              }
+              if (
+                  this.data.settings?.product_source &&
+                  this.data.settings.product_source === "products"
+              ) {
+                  const products = this.data.settings?.products ?? [];
+                  const values = products.map((e) => e.value).join(",");
+                  return `
+                      ${checkLimit}
+                      {%- capture handle_products -%}${values}{% endcapture%}
+                      {% assign products = handle_products | strip | split: ',' %}
+                      {% if products.size < 1 and EComBuilderMode %}
+                          {% assign products = collections.all.products  | map: 'handle' | limit: 5 %}
+                      {% endif %}
+                  `;
+              } else if (
+                  this.data.settings?.product_source &&
+                  ["type", "vendor"].includes(this.data.settings.product_source)
+              ) {
+                  let k = "product_" + this.data.settings.product_source;
+                  return `
+                          ${checkLimit}
+                          {%- capture value -%}${this.data.settings[k]?.value}{% endcapture%}
+                          {% assign products =  collections.all.products | where: '${this.data.settings.product_source}', value ${sort_query} | limit: limit %}
+
+                          {% if products.size < 1 and EComBuilderMode %}
+                              {% assign products = collections.all.products | limit:12 %}
+                          {% endif %}
+                      `;
+              } else if (this.data.settings && this.data.settings?.collection) {
+                  return `
+                          ${checkLimit}
+                          {%- capture handle_collection -%}${
+                              this.data.settings.collection.value
+                          }{% endcapture%}
+                          {% assign collection = collections[handle_collection] %}
+                          {%- if handle_collection  and collection.handle != blank  -%}
+                              {% assign products = collection.products  ${
+                                  this.data.settings?.show_product_available
+                                      ? ' | where: "available" '
+                                      : ""
+                              } ${sort_query}%}
+                          {% else %}
+                              {% assign products = collections.all.products  ${
+                                  this.data.settings?.show_product_available
+                                      ? ' | where: "available" '
+                                      : ""
+                              } ${sort_query}%}
+                              {% assign collection = collections.all%}
+                          {%- endif -%}
+                          {% assign is_collection = true %}
+                      `;
+              }
+              return `
+                      ${checkLimit}
+                      {% assign products = collections.last.products %}
+                      {% assign collection = collections.last %}
+                      {% assign is_collection = true %}
+                  `;
+          }
+      },
+      css() {
+        return `
+        .t4s-viewall-btn.ecom-t4s-viewall-btn {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .ecom-t4s-viewall-btn svg{
+            width:40px;
+            height: 40px;
+        }
+        .t4s-viewall-btn-after .t4s-viewall-btn-icon{
+              order: 1;
+          }
+
+        `
+      }
+    },
+    watch: {
+      'data.settings': {
+        deep: true,
+        handle: function(newVal, oldVal) {
+          console.log(newVal);
+        }
+      }
+    },
+    methods: {
+      style() {
+        let style = [
+          {
+              group_alias: "text:hover",
+              options: {
+                  group_name: "label_text",
+                  group_title: "Label text",
+                  selector: " .t4s-gallery-txt-accordions .gallery-with-text-label"
+              },
+              modify: {
+                  remove: {
+                      index: 0,
+                      length: 1
+                  },
+                  params: [
+                      {
+                          position: 10,
+                          fields: [
+                              {
+                                  type: "number",
+                                  name: "lines_clamp",
+                                  label: "Fixed number of lines",
+                                  value: 2,
+                                  options: {
+                                      min: 1,
+                                      max: 5
+                                  },
+                                  css: {
+                                      properties: {
+                                          "--ecom-webkit-line-clamp": ""
+                                      }
+                                  }
+                              },
+                              {
+                                  alias: "spacing",
+                                  options: {
+                                      name: "spacingNormal",
+                                      options: {
+                                          visible: (data) => data["tab"] === "normal"
+                                      }
+                                  }
+                              },
+                              {
+                                  alias: "spacing",
+                                  options: {
+                                      name: "spacingHover",
+                                      options: {
+                                          visible: (data) => data["tab"] === "hover"
+                                      },
+                                      css: {
+                                          selector: ":hover"
+                                      }
+                                  }
+                              }
+                          ]
+                      }
+                  ]
+              }
+          },
+          {
+              group_alias: "text:spacing",
+              options: {
+                  group_name: "heading",
+                  group_title: "Heading",
+                  selector: " .t4s-gallery-txt-accordions .t4s-txt-accordions-heading"
+              },
+              modify: {
+                  remove: {
+                      index: 0,
+                      length: 1
+                  },
+                  params: {
+                      position: 1,
+                      fields: {
+                          alias: "text-align",
+                          options: {
+                              label: "Alignment",
+                              css: {
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          {
+              group_alias: "text:spacing",
+              options: {
+                  group_name: "subheading",
+                  group_title: "Subheading",
+                  selector: " .t4s-gallery-txt-accordions .t4s-txt-accordions-subheading"
+              },
+              modify: {
+                  remove: {
+                      index: 0,
+                      length: 1
+                  },
+              }
+          },
+          {
+            group_alias: "button",
+            options: {
+                group_title: "Items button",
+                group_name: "item_button",
+                selector: " .t4s-gallery-txt-accordions .t4s-txt-accordions-button"
+            }
+          },
+          {
+            group_alias:'icon:hover',
+            options:{
+                group_title:'Icon',
+                group_name:'icon',
+                selector:' .t4s-gallery-txt-accordions .t4s-txt-accordions-button--icon',
+            },
+            modify:{
+                params:{
+                    position:20,
+                    fields:{
+                        alias:'spacing'
+                    }
+                }
+            }
+          }
+        ];
+
+        return style;
+      }
+    }
+  }
+</script></head><body cz-shortcut-listen="true"></body></html>

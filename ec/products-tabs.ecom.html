@@ -1,0 +1,1685 @@
+
+<!-- saved from url=(0115)https://cdn.shopify.com/s/files/1/0657/0013/5154/t/2/assets/products-tabs.ecom.html?v=33452848298746809071675473128 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><template></template>
+<script>
+  export default {
+    name: "Unsen Tabs Products",
+    props: {
+        data: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    },
+    data () {
+        return {
+            editing: false,
+            is: 'heading',
+            editingValue: '',
+            jsreactives: ['items']
+        };
+    },
+    computed: {
+        settings () {
+           const settings = [
+                {
+                    group_title: "Heading",
+                    params: [
+                        {
+                          label: "Heading design",
+                          name: "design_heading",
+                          type: "popup",
+                          value: "1",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  '1': "Design 01",
+                                  '2': "Design 2",
+                                  '3': "Design 3",
+                                  '4': "Design 4",
+                                  '5': "Design 5",
+                                  '6': "Design 6"
+                              },
+                              default: false
+                          }
+                        },
+                        {
+                          type: "paragraph",
+                          name: "heading_center",
+                          label: "Center align the heading"
+                        },
+                        {
+                          type: "toggle",
+                          name: "heading_center",
+                          label: "Center align the heading",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          },
+                        },
+                        {
+                          type: 'text',
+                          label: 'Heading',
+                          name: 'top_heading',
+                          value: 'Trending Products'
+                        },
+                        {
+                          type: 'text',
+                          label: 'Description',
+                          name: 'top_subheading',
+                          options: {
+                              toolbar: 'short',
+                              height: 80
+                            }
+                        }
+                    ]
+                },
+                {
+                    group_title: "Tabs Items",
+                    params: [
+                        {
+                            name: "items",
+                            label: "Tabs Items",
+                            type: "group",
+                            value: [],
+                            options: {
+                                add_text: "Add item",
+                                is_clear_all: false
+                            },
+                            params: [
+                                {
+                                    type: "text",
+                                    label: "Tab title",
+                                    name: "title"
+                                },
+                                {
+                                    type: "text",
+                                    label: "Enter a icon name on tab title",
+                                    name: "icon_title",
+                                    description: "[LineAwesome](https://kalles.the4.co/font-lineawesome/). Leave it blank if you want to use an image"
+                                },
+                                {
+                                    type: "picker",
+                                    label: "Image on title item",
+                                    name: "image_title",
+                                    options: {
+                                        type: "image",
+                                        output: ["value", "name"],
+                                        editAlt: true
+                                    }
+                                },
+                                {
+                                    type: "picker",
+                                    label: "Select collection to show",
+                                    name: "collection",
+                                    options: {
+                                        type: "collection",
+                                        multiple: false
+                                    }
+                                },
+                                {
+                                  label: "Product item design",
+                                  name: "product_des",
+                                  type: "popup",
+                                  value: '1',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '1': "Design 1",
+                                          '2': "Design 2",
+                                          '3': "Design 3",
+                                          '4': "Design 4",
+                                          '5': "Design 5",
+                                          '6': "Design 6",
+                                          '7': "Design 7"
+                                      },
+                                      default: false
+                                  }
+                                },
+
+                                {
+                                  label: "Rating position",
+                                  name: "rating_pos",
+                                  type: "popup",
+                                  description: "Only work when enable \"Rating\" in themes settings",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '1': "Above product name",
+                                          '2': "Under product price",
+                                          '3': "Hidden"
+                                      },
+                                      default: false
+                                  }
+                                },
+                                {
+                                  label: "Colors swatches position",
+                                  name: "list_color_pos",
+                                  type: "popup",
+                                  description: "Only work when enable \"Color swatches\" in themes settings",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '1': "On image product/top info",
+                                          '2': "In product info/bottom info"
+                                      },
+                                      default: false
+                                  }
+                                },
+                                {
+                                  label: "Sizes list position",
+                                  name: "list_size_pos",
+                                  type: "popup",
+                                  description: "Only work when enable \"Size list\" in themes settings",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '1': "On image product/top info",
+                                          '2': "In product info/bottom info"
+                                      },
+                                      default: false
+                                  }
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "show_vendor",
+                                  label: "Show product vendors",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "use_cdt",
+                                  label: "Show product countdown",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "featured_items",
+                                  label: "Show featured items",
+                                  description: "Not works when \"Layout design\" is Carousel",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "number",
+                                  label: "Maximum products to show",
+                                  name: "limit",
+                                  value: 8,
+                                  options: {
+                                      min: 1,
+                                      max: 50
+                                  }
+                                },
+                                {
+                                  type: "number",
+                                  label: "Items per row",
+                                  name: "col_dk",
+                                  value: '4',
+                                  options: {
+                                      responsive: true,
+                                      min: 1,
+                                      max: 6
+                                  }
+                                },
+                                {
+                                  name: "image_ratio",
+                                  type: "popup",
+                                  label: "Image ratio",
+                                  value: 'rationt',
+                                  options: {
+                                      default: false,
+                                      type: 'dropdown',
+                                      preview: 'title',
+                                      values: {
+                                        'ratioadapt': "Adapt to image",
+                                        'ratio2_1': "2:1",
+                                        'ratio16_9': "16:9",
+                                        'ratio8_5': "8:5",
+                                        'ratio3_2': "3:2",
+                                        'ratio4_3': "4:3",
+                                        'rationt': "Ratio ASOS",
+                                        'ratio1_1': "1:1",
+                                        'ratio2_3': "2:3",
+                                        'ratio1_2': "1:2"
+                                      },
+                                  }
+                                },
+                                {
+                                  name: "image_size",
+                                  type: "popup",
+                                  label: "Image size",
+                                  value: 'cover',
+                                  options: {
+                                      default: false,
+                                      type: 'dropdown',
+                                      preview: 'title',
+                                      values: {
+                                        'cover': "Full",
+                                        'contain': "Auto",
+                                      },
+                                      visible: {
+                                          condition: (data) => data.image_ratio != "ratioadapt"
+                                      }
+                                  }
+                                },
+                                {
+                                  name: "image_position",
+                                  type: "popup",
+                                  label: "Image position",
+                                  value: '8',
+                                  description: "The first value is the horizontal position and the second value is the vertical.",
+                                  options: {
+                                      default: true,
+                                      type: 'dropdown',
+                                      preview: 'title',
+                                      values: {
+                                        '1': "Left top",
+                                        '2': "Left center",
+                                        '3': "Left bottom",
+                                        '4': "Right top",
+                                        '5': "Right center",
+                                        '6': "Right bottom",
+                                        '7': "Center top",
+                                        '8': "Center center",
+                                        '9': "Center bottom"
+                                      },
+                                      visible: {
+                                          condition: (data) => data.image_ratio != "ratioadapt"
+                                      }
+                                  }
+                                },
+                                {
+                                  name: "content_align",
+                                  type: "popup",
+                                  label: "Product content align",
+                                  options: {
+                                      default: true,
+                                      preview: 'title',
+                                      type: 'dropdown',
+                                      values: {
+                                        'center': "Center",
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "border_pr",
+                                  label: "Enable border product items",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      }
+                                  }
+                                },
+                                {
+                                  label: "View all button",
+                                  name: "use_pagination",
+                                  type: "popup",
+                                  value: 'none',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          'none': "None",
+                                          'view-all': "View all button"
+                                      },
+                                      default: false
+                                  }
+                                },
+                                {
+                                  type: 'text',
+                                  label: 'View all title (optional)',
+                                  name: 'text_view_all',
+                                  value: 'SHOP ALL'
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "btn_icon",
+                                  label: "Enable button icon",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      },
+                                      visible: {
+                                          condition: (data) => data.use_pagination != "none"
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "toggle",
+                                  name: "btn_rounded",
+                                  label: "Button rounded",
+                                  options: {
+                                      oneline: true,
+                                      values: {
+                                          on: {
+                                              label: "Yes",
+                                              value: true
+                                          },
+                                          off: {
+                                              label: "No",
+                                              value: false
+                                          }
+                                      },
+                                      visible: {
+                                          condition: (data) => data.use_pagination != "none"
+                                      }
+                                  }
+                                },
+                                {
+                                  label: "Button style",
+                                  name: "button_style",
+                                  type: "popup",
+                                  value: 'default',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          'default': "Default",
+                                          'outline': "Outline",
+                                          'bordered': "Bordered bottom",
+                                          'link': "Link"
+                                      },
+                                      default: false,
+                                      visible: {
+                                          condition: (data) => data.use_pagination != "none"
+                                      }
+                                  }
+                                },
+                                {
+                                  label: "Button color",
+                                  name: "btns_cl",
+                                  type: "popup",
+                                  value: 'dark',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          'light': "Light",
+                                          'dark': "Dark",
+                                          'primary': "Primary"
+                                      },
+                                      default: false,
+                                      visible: {
+                                          condition: (data) => data.use_pagination != "none"
+                                      }
+                                  }
+                                },
+                                {
+                                  label: "Button position",
+                                  name: "btns_pos",
+                                  type: "popup",
+                                  value: 't4s-text-center',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          't4s-text-start': "Left",
+                                          't4s-text-center': "Center",
+                                          't4s-text-end': "Right"
+                                      },
+                                      default: false,
+                                      visible: {
+                                          condition: (data) => data.use_pagination != "none"
+                                      }
+                                  }
+                                },
+                                {
+                                  type: "line",
+                                },
+                                {
+                                  label: "Layout design",
+                                  name: "layout_des",
+                                  type: "popup",
+                                  value: '2',
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '1': "Grid",
+                                          '2': "Carousel"
+                                      },
+                                      default: false
+                                  }
+                                },
+                                {
+                                  label: "Space horizontal items",
+                                  name: "space_h_item",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                  }
+                              },
+                              {
+                                  label: "Space vertical items",
+                                  name: "space_v_item",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                  }
+                              },
+                              {
+                                  label: "Space horizontal items(tablet)",
+                                  name: "space_h_item_tb",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                  }
+                              },
+                              {
+                                  label: "Space vertical items(tablet)",
+                                  name: "space_v_item_tb",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                  }
+                              },
+                              {
+                                  label: "Space horizontal items(mobile)",
+                                  name: "space_h_item_mb",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                  }
+                              },
+                              {
+                                  label: "Space vertical items(mobile)",
+                                  name: "space_v_item_mb",
+                                  type: "popup",
+                                  options: {
+                                      preview: "title",
+                                      type: "dropdown",
+                                      values: {
+                                          '0': "0",
+                                          '2': "2px",
+                                          '4': "4px",
+                                          '6': "6px",
+                                          '8': "8px",
+                                          '10': "10px",
+                                          '15': "15px",
+                                          '20': "20px",
+                                          '30': "30px",
+                                      },
+                                      default: false,
+                                    }
+                                }
+                            ]
+                        }
+                        
+                    ]
+                },
+                {
+                    group_title: "Tabs list options",
+                    params: [
+                        {
+                          type: "toggle",
+                          name: "title_inline",
+                          label: "Title inline",
+                          description : "Tick here to show Tab title and tab list on 1 line",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "head_slide_btn",
+                          label: "Enable navigation button on top",
+                          description : "Only works when tab items is carousel and navigation button enabled. Not works when enabled tabs head button",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          label: "Tabs design",
+                          name: "tabs_des",
+                          type: "popup",
+                          value: 'border',
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'base': "Base",
+                                  'border': "Has border (when item active)",
+                                  'border-bg': "Has border and background",
+                                  'underline': "Has underline (when item active)",
+                              },
+                              default: false
+                          }
+                        },
+                        {
+                          label: "Tabs item border",
+                          name: "tabs_border",
+                          type: "popup",
+                          value: 'dashed',
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'none': "None",
+                                  'solid': "Solid",
+                                  'dashed': "Dashed",
+                                  'dotted': "Dotted"
+                              },
+                              default: false
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "tabs_list_border",
+                          label: "Tabs list border bottom",
+                          description : "Tick here to show border bottom of tabslist. It looks good with the design 'Has underline'. ",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          label: "Tabs List Position",
+                          name: "tabs_pos",
+                          type: "popup",
+                          value: 'center',
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'start': "Left",
+                                  'center': "Center",
+                                  'end': "Right"
+                              },
+                              default: false
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "item_rounded",
+                          label: "Tabs item rounded",
+                          description : "Only working with design has border and background ",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                            type: 'color',
+                            label: 'Primary color',
+                            name: 'pri_cl',
+                            oneline: true,
+                            description: '',
+                            options: {
+                                global: {
+                                    type: 'colors'
+                                }
+                            }
+                        },
+                        {
+                            type: 'color',
+                            label: 'Secondary color',
+                            name: 'secon_cl',
+                            oneline: true,
+                            description: '',
+                            options: {
+                                global: {
+                                    type: 'colors'
+                                }
+                            }
+                        },
+                        {
+                            type: 'color',
+                            label: 'Primary active color',
+                            name: 'pri_active_cl',
+                            oneline: true,
+                            description: '',
+                            options: {
+                                global: {
+                                    type: 'colors'
+                                }
+                            }
+                        },
+                        {
+                            type: 'color',
+                            label: 'Secondary active color',
+                            name: 'secon_active_cl',
+                            oneline: true,
+                            description: '',
+                            options: {
+                                global: {
+                                    type: 'colors'
+                                }
+                            }
+                        },
+                        {
+                            name: "tabslist_mb",
+                            type: "number",
+                            label: "Tabs list margin bottom (Unit px)",
+                            value: 30,
+                            options: {
+                              min: 0,
+                              max: 100
+                            },
+                        },
+                        {
+                            name: "space_between",
+                            type: "number",
+                            label: "Space between items tabs (Unit px)",
+                            value: 5,
+                            options: {
+                              min: 0,
+                              max: 100,
+                              responsive: true
+                            }
+                        }
+                        
+                    ]
+                },
+                {
+                    group_title: "Slider Options",
+                    params: [
+                        
+                        {
+                          type: "toggle",
+                          name: "loop",
+                          label: "Enable loop",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                            name: "au_time",
+                            type: "number",
+                            label: "Autoplay speed in second.",
+                            description: "Set is '0' to disable autoplay",
+                            options: {
+                              min: 0,
+                              max: 1500
+                            },
+                        },
+                        {
+                          type: "toggle",
+                          name: "au_hover",
+                          label: "Pause autoplay on hover",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "nav_btn",
+                          label: "Use prev next button",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          label: "Prev next position",
+                          description: "Working on screen Desktop",
+                          name: "btn_pos",
+                          type: "popup",
+                          value: "between",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'in': "In content",
+                                  'out': "Out content",
+                                  'between': "Content side center"
+                                  
+                              },
+                              default: false,
+                                visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Visible",
+                          name: "btn_vi",
+                          type: "popup",
+                          value: "always",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'always': "Always",
+                                  'hover': "Only hover"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Button style",
+                          name: "btn_owl",
+                          type: "popup",
+                          value: "default",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'default': "Default",
+                                  'outline': "Outline",
+                                  'simple': "Simple"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Button shape",
+                          name: "btn_shape",
+                          type: "popup",
+                          value: "none",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'none': "Default",
+                                  'round': "Round",
+                                  'rotate': "Rotate"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Button color",
+                          name: "btn_cl",
+                          type: "popup",
+                          value: "dark",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'light': "Light",
+                                  'dark': "Dark",
+                                  'primary': "Primary"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Buttons size",
+                          name: "btn_size",
+                          type: "popup",
+                          value: "small",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'small': "Small",
+                                  'medium': "Medium",
+                                  'large': "Large"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                            }
+                        },
+                        {
+                          type: "toggle",
+                          name: "btn_hidden_mobile",
+                          label: "Hidden buttons on mobile",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              },
+                              visible: {
+                                  condition: (data) => data.nav_btn == true
+                               }
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "nav_dot",
+                          label: "Use page dots",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              }
+                          }
+                        },
+                        {
+                          label: "Dots style",
+                          name: "dot_owl",
+                          type: "popup",
+                          value: "default",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'default': "Default",
+                                  'outline': "Outline",
+                                  'elessi': "Elessi",
+                                  'br-outline': "Bordered outline"
+                                  
+                                },
+                              default: false,
+                             visible: {
+                                  condition: (data) => data.nav_dot == true
+                               }
+                            }
+                        },
+                        {
+                          label: "Dots color",
+                          name: "dots_cl",
+                          type: "popup",
+                          value: "dark",
+                          options: {
+                              preview: "title",
+                              type: "dropdown",
+                              values: {
+                                  'light': "Light",
+                                  'dark': "Dark",
+                                  'primary': "Primary"
+                                  
+                                },
+                              default: false,
+                              visible: {
+                                  condition: (data) => data.nav_dot == true
+                               }
+                            }
+                        },
+                        {
+                          type: "toggle",
+                          name: "dots_round",
+                          label: "Enable round dots",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              },
+                              visible: {
+                                  condition: (data) => data.nav_dot == true
+                               }
+                          }
+                        },
+                        {
+                          type: "toggle",
+                          name: "dots_hidden_mobile",
+                          label: "Hidden dots on mobile",
+                          options: {
+                              oneline: true,
+                              values: {
+                                  on: {
+                                      label: "Yes",
+                                      value: true
+                                  },
+                                  off: {
+                                      label: "No",
+                                      value: false
+                                  }
+                              },
+                              visible: {
+                                  condition: (data) => data.nav_dot == true
+                               }
+                          }
+                        }
+
+                        
+                    ]
+                }
+                
+            ];
+           
+            return settings;
+        },
+        se_stts() {
+            return this.data.settings;
+        },
+
+        liquids() {
+
+            const heading = `
+                {%- liquid
+                    assign top_heading = '${this.se_stts?.top_heading ? this.se_stts?.top_heading : ''}'
+                    assign top_subheading = '${ this.se_stts?.top_subheading ? this.se_stts?.top_subheading : '' }'
+                    assign design_heading = '${this.se_stts?.design_heading}'
+                -%}
+                {%- if top_heading != '' or top_subheading != blank -%}
+                    {{ 'top-head.css' | asset_url | stylesheet_tag }}
+                    <div class="t4s-top-heading t4s_des_title_{{ design_heading }} ${this.se_stts?.heading_center ? 't4s-text-center' : ''} {% if top_subheading != blank %} t4s-has-section-des{% endif %}" {% if get_height %}data-get-height{% endif %} style="--tophead-mb: 0px;--tophead-mb-tb: 15px;--tophead-mb-mb: 15px;">
+                        {%- if top_heading != blank -%}<h3 class="t4s-section-title t4s-title"><span>{{ top_heading | replace:"[", "<span class='t4s-heading-highlight'>" | replace:"]", "</span>" }}</span></h3>{%- endif -%}
+                        {%- if design_heading == "3" -%}
+                            <div class="t4s-heading-char t4s-d-flex ${this.se_stts?.heading_center ? 't4s-justify-content-center' : ''}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="118 82.1 385.5 42">
+                                    <path class="st0" d="M483.1,100.9c-4.1,8.2-7,13.2-11.7,13.2c-4.6,0-7.5-5-11.7-13.3c-4.2-8.3-9.5-18.7-20.6-18.7  c-11.1,0-16.4,10.4-20.6,18.8c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.4,10.4-20.6,18.8  c-4.1,8.2-7,13.2-11.6,13.2s-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.5,13.2  c-4.6,0-7.4-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8c-11.1,0-16.3,10.4-20.5,18.8c-4.1,8.2-7,13.2-11.6,13.2  c-4.6,0-7.5-5-11.6-13.2c-4.2-8.4-9.4-18.8-20.5-18.8v10c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.5,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.5-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.4,18.8,20.5,18.8  c11.1,0,16.3-10.4,20.5-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8  c11.1,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.4,5,11.6,13.2c4.2,8.3,9.4,18.8,20.5,18.8s16.3-10.4,20.6-18.8  c4.1-8.2,7-13.2,11.6-13.2c4.6,0,7.5,5,11.6,13.2c4.2,8.4,9.5,18.8,20.6,18.8c11.2,0,16.4-10.4,20.6-18.8c4.1-8.2,7-13.2,11.7-13.2  v-10C492.5,82.1,487.3,92.5,483.1,100.9z"/>
+                                </svg>
+                            </div>
+                        {%- endif -%}
+                        {%- if top_subheading != blank -%}<span class="t4s-section-des t4s-subtitle">{{ top_subheading | replace:"[", "<span class='t4s-heading-highlight'>" | replace:"]", "</span>" }}</span>{%- endif -%}
+                    </div>
+                {%- endif -%}
+            `
+            const tab_item_title = this.data?.settings?.items?.length ? this.data?.settings?.items.map((item, index)=> {
+
+                    return `
+                        {%- liquid
+                          assign title      = '${item?.title ? item?.title : ''}'
+                          assign image      = '${item?.image_title || ''}'
+                          assign icon_title = '${item?.icon_title || ''}'
+                          assign collection_id = '${item.collection?.id || ''}' -%}
+
+                        <li class="t4s-tab-item t4s-d-inline-flex {%- if image != blank %} t4s-has-img-title {% endif -%}">
+                            <a href="#t4s-${this.data.id}${index}" rel="nofollow" data-t4s-tab-item data-no-instant {{ block.shopify_attributes }} ${index == '0' ? 'class="t4s-active"' : ''} data-dropdown-item data-sortby-item>
+                            <span>
+                              {% if icon_title != blank %}  
+                                <span class="t4s-icon-title"><i class="{{ icon_title }}"></i></span>
+                              {% elsif image != blank %}
+                                <span class="t4s-image-title">
+                                  <img class="lazyloadt4s t4s-lz--fadeIn" data-src="${item.image_title?.value}" data-widths="[100,200,400,600,700,800,900,1000,1200,1400,1600]" data-optimumx="2" data-sizes="auto" src="${item.image_title?.value}">
+                                  <span class="lazyloadt4s-loader is-bg-img" style="background: url(${item.image_title?.value});"></span>
+                                </span>
+                              {% endif %}
+                              <span class="t4s-text-title">${ item.title }</span>
+                            </span>
+                            </a>
+                        </li>
+
+                        `
+
+                }).join("") : '';
+            const tab_item_content = this.data?.settings?.items.length ? this.data?.settings?.items.map((item, index)=> {
+                    return `
+            
+                        {%- liquid
+                          assign layout_des = '${item?.layout_des || '1'}'
+                          assign image_ratio = '${item?.image_ratio}'
+                          if image_ratio == "ratioadapt"
+                            assign imgatt = ''
+                          else
+                            assign imgatt = 'data-'
+                          endif
+
+                          assign btn_icon = ${item?.btn_icon}
+                          assign sett_equal = false
+                          assign show_vendor = ${item?.show_vendor}
+                          assign use_link_vendor = true
+                          assign enable_rating = settings.enable_rating
+                          if enable_rating
+                            assign rating_pos =  '${item?.rating_pos}'
+                          endif
+                          assign list_color_pos = '${item?.list_color_pos}'
+                          assign list_size_pos = '${item?.list_size_pos}'
+                          assign product_des = '${item?.product_des || '1'}'
+                          assign use_pagination = '${item?.use_pagination || 'none'}'
+                          assign text_view_all = '${item?.text_view_all ? item?.text_view_all : ''}'
+                          assign button_style = '${item?.button_style ? item?.button_style : 'default'}'
+
+                          assign show_img = settings.show_img
+                          assign isGrowaveWishlist = false
+                          if settings.wishlist_mode == "3" and shop.customer_accounts_enabled
+                            assign isGrowaveWishlist = true
+                          endif
+                          assign placeholder_img = settings.placeholder_img
+                          assign enable_pr_size = settings.enable_pr_size
+                          assign pr_size_pos = settings.pr_size_pos
+                          assign show_size_type = settings.show_size_type
+                          assign size_ck = settings.size_ck | append: ',size,sizes,Größe'
+                          assign get_size = size_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+                          assign enable_pr_color = settings.enable_pr_color
+                          assign show_cl_type = settings.show_color_type
+                          assign color_ck = settings.color_ck | append: ',color,colors,couleur,colour'
+                          assign get_color = color_ck | downcase | replace: ' ,', ',' | replace: ', ', ',' | split: ',' | uniq
+
+                          assign price_varies_style = settings.price_varies_style
+                          assign app_review = settings.app_review
+                          assign use_countdown = ${item?.use_cdt}
+                          assign enable_bar_lm = ${item?.enable_bar_lm}
+                          assign results_count = collection.products_count
+
+                          assign handle = '${item.collection?.value || ''}'
+                          if handle
+                            assign collection = collections[handle]
+                          endif
+                          assign collection_id = '${item.collection?.id || ''}'
+                          assign limit = ${item?.limit}
+                         -%}
+
+                        <div id="t4s-${this.data.id}${index}" class="t4s-tab-content2 ${index == '0' ? 't4s-active' : ''}" data-t4s-tab-content data-render-lazy-component >
+                        {%- if ck_q == false -%}[t4splitlz]{%- endif -%}
+                        {%- paginate collection.products by limit -%}
+                        <div data-not-main data-ntajax-options='{"id": "{{ sid }}","type": "{{ typeAjax }}","isProduct": true,"view": ""}' class="tabs-content-wrap">
+                         {%- if layout_des == "1" -%} 
+                          {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                          <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                          <div data-collection-url="{{ collection.url }}" data-contentlm-replace class="t4s_box_pr_grid t4s-products t4s-border-pr-img-${item?.border_pr} {% if ${item?.featured_items} %}t4s-has-featured-items{% endif %} t4s-text-${item?.content_align} t4s_{{ image_ratio }} t4s_position_${item?.image_position} t4s_${item?.image_size} t4s-row t4s-justify-content-center t4s-row-cols-lg-${item?.col_dk || '4'} t4s-row-cols-md-${item?.col_dk__tablet || '3'} t4s-row-cols-${item?.col_dk__mobile || '2'} t4s-gx-lg-${item?.space_h_item || '30'} t4s-gy-lg-${item?.space_v_item || '30'} t4s-gx-md-${item?.space_h_item_tb || '15'} t4s-gy-md-${item?.space_v_item_tb || '15'} t4s-gx-${item?.space_h_item_mb || '15'} t4s-gy-${item?.space_v_item_mb || '15'}">
+                         {%- elsif layout_des == "2" -%} 
+                          <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver class="t4s-flickity-slider t4s_box_pr_slider t4s-products t4s-border-pr-${item?.border_pr} t4s-text-${item?.content_align} t4s_${item?.image_ratio} t4s_position_${item?.image_position} t4s_${item?.image_size} {% if nav_btn %} t4s-slider-btn__${this.se_stts?.btn_pos}-content t4s-slider-btn-style-${this.se_stts?.btn_owl} t4s-slider-btn-${this.se_stts?.btn_shape} t4s-slider-btn-${this.se_stts?.btn_size} t4s-slider-btn-cl-${this.se_stts?.btn_cl} t4s-slider-btn-vi-${this.se_stts?.btn_vi} t4s-slider-btn-hidden-mobile-${this.se_stts?.btn_hidden_mobile || false} {% endif %}{% if nav_dot %} t4s-dots-style-${this.se_stts?.dot_owl} t4s-dots-cl-${this.se_stts?.dots_cl} t4s-dots-round-${this.se_stts?.dots_round || false } t4s-dots-hidden-mobile-${this.se_stts?.dots_hidden_mobile || false} {% endif %} t4s-row t4s-row-cols-lg-${item?.col_dk || '4'} t4s-row-cols-md-${item?.col_dk__tablet || '3'} t4s-row-cols-${item?.col_dk__mobile || '2'} t4s-gx-lg-${item?.space_h_item || '30'} t4s-gy-lg-${item?.space_v_item || '30'} t4s-gx-md-${item?.space_h_item_tb || '15'} t4s-gy-md-${item?.space_v_item_tb || '15'} t4s-gx-${item?.space_h_item_mb || '15'} t4s-gy-${item?.space_v_item_mb || '15'} flickityt4s" data-flickityt4s-js='{"setPrevNextButtons": true,"arrowIcon": "{{ arrow_icon }}","imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": {{${this.se_stts?.loop || false}}},"prevNextButtons": {{ ${this.se_stts?.nav_btn || false } }}, "percentPosition": 1,"pageDots": {{${this.se_stts?.nav_dot || false}}}, "autoPlay" : ${this.se_stts?.au_time ? this.se_stts?.au_time * 1000 : 0}, "pauseAutoPlayOnHover" : ${this.se_stts?.au_hover || true } }' style="--btn-distance: 30px;--space-dots: 10px;--dots-bottom-pos: 30px;--top-minus: 50px;--top-minus-mb: 30px;">
+                         {%- else -%} 
+                          {{ 'button-style.css' | asset_url | stylesheet_tag }}
+                          <link href="{{ 'custom-effect.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                          <div data-collection-url="{{ collection.url }}" data-t4s-resizeobserver data-contentlm-replace class="isotopet4s t4s_box_pr_masonry t4s-border-pr-img-${item?.border_pr} {% if ${item?.featured_items} %}t4s-has-featured-items{% endif %} t4s-text-${item?.content_align} t4s_{{ image_ratio }} t4s_position_${item?.image_position} t4s_${item?.image_size} t4s-row t4s-row-cols-lg-${item?.col_dk || '4'} t4s-row-cols-md-${item?.col_dk__tablet || '3'} t4s-row-cols-${item?.col_dk__mobile || '2'} t4s-gx-lg-${item?.space_h_item || '30'} t4s-gy-lg-${item?.space_v_item || '30'} t4s-gx-md-${item?.space_h_item_tb || '15'} t4s-gy-md-${item?.space_v_item_tb || '15'} t4s-gx-${item?.space_h_item_mb || '15'} t4s-gy-${item?.space_v_item_mb || '15'}" data-isotopet4s-js='{ "itemSelector": ".t4s-product", "layoutMode": "masonry" }'>
+                         {%- endif -%}  
+                          {%- if collection != blank -%}
+                            {%- liquid
+                              case product_des
+                                  when '1'
+                                    render 'pr-grid-item1' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '2'
+                                    render 'pr-grid-item2' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '3'
+                                    render 'pr-grid-item3' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '4'
+                                    render 'pr-grid-item4' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '5'
+                                    render 'pr-grid-item5' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '6'
+                                    render 'pr-grid-item6' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                  when '7'
+                                    render 'pr-grid-item7' for collection.products as product, product: product, isGrowaveWishlist: isGrowaveWishlist, show_img: show_img, show_vendor: show_vendor, use_link_vendor: use_link_vendor, rating_pos: rating_pos, list_color_pos: list_color_pos, list_size_pos: list_size_pos, enable_pr_color: enable_pr_color, show_cl_type: show_cl_type, get_color: get_color, enable_pr_size: enable_pr_size, pr_size_pos: pr_size_pos, get_size: get_size, show_size_type: show_size_type, price_varies_style: price_varies_style, app_review: app_review, enable_rating: enable_rating, use_countdown: use_countdown, imgatt: imgatt, show_list_btns: false, placeholder_img: placeholder_img
+                                endcase -%}
+                          {%- else -%}
+                            {%- for i in (1..8) -%}
+                              <div class="t4s-col-item t4s-product t4s-pr-grid t4s-pr-style{{ product_des }} t4s-pr-item t4s-pr-des-{{ product_des }}">
+                                <div class="t4s-product-wrapper" data-cacl-slide >
+                                  <div class="t4s-product-inner">
+                                    <a class="t4s-d-block" data-cacl-slide href="/admin/products">{%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%} 
+                                    {{ 'product-' | append: current | placeholder_svg_tag: 't4s-placeholder-svg' }}</a>
+                                  </div>
+                                  <div class="t4s-product-info">
+                                    <div class="t4s-product-info__inner">
+                                      <h3 class="t4s-product-title"><a href="/admin/products">{{ 'onboarding.product_title' | t }}</a></h3>
+                                      <span class="t4s-product-price"><del>$59.00</del><ins>$39.00</ins></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            {%- endfor -%}
+                          {%- endif -%} 
+                        </div>
+                        
+                        {% if use_pagination != "none" %}   
+                          {%- if paginate.pages > 1 -%}
+                            <div class="t4s-prs-footer t4s-has-btn-{{ use_pagination }} ${item?.btns_pos}">
+                                <a class="t4s-viewall-btn t4s-btn t4s-btn-base t4s-btn-style-${item?.button_style} t4s-btn-size-small t4s-btn-rounded-${item?.btn_rounded || 'false'} t4s-btn-icon-${item?.btn_icon || 'false'} t4s-btn-color-${item?.btns_cl}{% if button_style == 'default' or button_style == 'outline' %} t4s-btn-effect-default{% endif %}" href="{{ collection.url }}">
+                                {%- if text_view_all != '' -%}
+                                  ${ item.text_view_all }
+                                {%- else -%}
+                                  {{ 'collections.pagination.view_all' | t }}
+                                {%- endif -%} 
+                                {%- if ${item?.btn_icon || 'false'} -%} <svg class="t4s-btn-icon" viewBox="0 0 14 10"><use xlink:href="#t4s-icon-btn"></use></svg>{%- endif -%}</a>
+                            </div>
+                          {%- endif -%} 
+                        {%- endif -%} 
+                        </div>
+                        {%- endpaginate -%}
+                        {%- if ck_q == false -%}[t4splitlz]{%- endif -%}
+                        </div>
+                        `
+                }).join("") : '' ;
+             const tab_item_content_replace = this.data?.settings?.items.length ? this.data?.settings?.items.map((item, index)=> {
+               return `
+                {%- liquid
+                  assign handle = '${item.collection?.value || ''}'
+                  if handle
+                    assign collection = collections[handle]
+                  endif
+                -%}
+                <div id="t4s-${this.data.id}${index}" class="t4s-tab-content2 lazyloadt4s ${index == '0' ? 't4s-active' : ''}" data-t4s-tab-content data-render-lazy-component data-rendert4s="{{ collection.url | default: search_url }}/${index}_bid+ntt4tag" data-set4surl='/?section_id={{ sid }}' data-t4splitlz>
+                    <div class="lds_bginfinity pr mt__50 mb__100"></div></div>
+               `
+             }).join("") : '';
+          return {
+
+                tabs_products: {
+                    code: ` 
+                    {%- liquid
+                          assign sid = '${this.data.id}'
+                          assign se_stts = section.settings
+                          assign se_blocks = section.blocks
+                          assign search_url = routes.all_products_collection_url
+                          assign nav_btn = ${this.se_stts?.nav_btn}
+                          assign nav_dot = ${this.se_stts?.nav_dot}
+                          assign btn_owl = 'default'
+                          if btn_owl == "outline"
+                            assign arrow_icon = 1
+                          else
+                            assign arrow_icon = 2
+                          endif
+                          if se_stts.btn_owl == "outline"
+                            assign arrow_icon = 1
+                          else
+                            assign arrow_icon = 2
+                          endif
+
+                          assign tabs_des = '${this.se_stts?.tabs_des}'
+                          assign title_inline = ${this.se_stts?.title_inline }
+                          assign tabs_pos = '${this.se_stts?.tabs_pos }'
+                          
+                          assign use_link_vendor = ${this.se_stts?.use_link_vendor }
+
+                         
+                         -%} 
+                        {{ 'section.css' | asset_url | stylesheet_tag }}
+                        {{ 'top-head.css' | asset_url | stylesheet_tag }}
+                        {{ 'tabs-collection.css' | asset_url | stylesheet_tag }}
+                        {{ 'collection-products.css' | asset_url | stylesheet_tag }}
+                        {{ 'slider-settings.css' | asset_url | stylesheet_tag }}
+                        {{ 'pre_flickityt4s.min.css' | asset_url | stylesheet_tag }}
+                        <link rel="stylesheet" href="{{ 'base_drop.min.css' | asset_url }}" media="all">
+                        <link href="{{ 'loading.css' | asset_url }}" rel="stylesheet" media="print" onload="this.media='all'">
+                        {%- if current_tags contains 'ntt4tag' and current_tags -%}
+                          {%- assign num_i = current_tags[0] | remove: '_bid' | plus: 0 -%} 
+                          {%- assign block = section.blocks[num_i] -%}
+                          {%- assign collection = collections[block.settings.collection] -%}
+                          ${tab_item_content}
+                        {%- else -%}
+                        <div class="t4s-section-inner nt_se_{{ sid }}">
+                            <div class=" t4s-tabs-se {% if title_inline %}t4s-tabs-inline{% endif %} t4s-tabs-{{ tabs_des }} t4s-tabs-{{ tabs_pos }} t4s-tabs-list-border-${this.se_stts?.tabs_list_border} t4s-head-slide-nav-${this.se_stts?.head_slide_btn || false} t4s-hidden-head-btn-mb-${this.se_stts?.hidden_btn_mb || false} t4s-item-rounded-${this.se_stts?.item_rounded || false} t4s-border-${this.se_stts?.tabs_border}" style="--border:${this.se_stts?.tabs_border};--pri-cl:${this.se_stts?.pri_cl};--secon-cl:${this.se_stts?.secon_cl};--pri-active-cl:${this.se_stts?.pri_active_cl};--secon-active-cl:${this.se_stts?.secon_active_cl};--item-lh:40px;--space-between:${this.se_stts?.space_between}px;--space-between-tb:${this.se_stts?.space_between__tablet}px;--space-between-mb:${this.se_stts?.space_between__mobile}px;--tablist-mgb:${this.se_stts?.tabslist_mb}px;">
+                              <div class="t4s-tabs t4s-type-tabs2" data-t4s-tabs2>
+                                  <div class="t4s-section-head t4s-tabs-head" data-get-height>
+                                    ${heading}
+                                    <div class="t4s-tabs-head-inner t4s-dropdown t4s-text-{{ tabs_pos }}">
+                                        <ul data-dropdown-wrapper data-t4s-tab-ul2 class="t4s-tabs-ul2 t4s-tabs-ul t4s-g-0 t4s-text-{{ tabs_pos }}{% if tabs_des == "dropdown" %} t4s-dropdown__content{% else %} t4s-flickity-slider t4s-slider-btn-style-simple flickityt4s{% endif %}" data-flickityt4s-js='{"isSimple": true, "freeScroll": true, "setPrevNextButtons": true, "arrowIcon": "1", "imagesLoaded": 0,"adaptiveHeight": 0, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "minWidthLG": 992, "cellAlignLG":"{{ tabs_pos }}", "cellAlign":"center", "wrapAround": false,"prevNextButtons": true,"percentPosition": 0,"pageDots": false, "pauseAutoPlayOnHover" : true }' >
+                                          ${tab_item_title}
+                                        </ul>
+                                    </div>
+                                  </div>
+                                  <div class="t4s-pr t4s-tab-contents2">
+                                  ${tab_item_content}
+                                  </div>
+                              </div>
+                            </div>
+                            
+                        </div>
+                        {%- endif -%}
+                    `,
+                    
+                    preview: ``
+                }
+            }
+        },
+  
+       
+        heading () {
+            return this.data;
+        },
+  
+        activeMe () {
+            return (this.editingElement?.data?.id ?? 0) === this.heading.id;
+        },
+  
+        default() {
+            return {
+                settings: {
+                    content: "Enter your heading",
+                    tag: "h2"
+                },
+                style: {
+                    text: {
+                        textTextAlign: "left"
+                    }
+                }
+            }
+        }
+  
+    },
+    watch: {
+        activeMe (val) {
+            if (!val && this.editing === true) {
+                this.editing = false;
+                this.heading.settings.content = this.$refs.content.innerHTML;
+            }
+        }
+    },
+    methods: {
+      style() {
+        let style = [
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "title_heading",
+              group_title: "Heading",
+              selector: " .t4s-top-heading .t4s-section-title",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: {
+                position: 1,
+                fields: {
+                  alias: "text-align",
+                  options: {
+                    label: "Alignment",
+                    css: {}
+                  }
+                }
+              }
+            }
+          },
+        {
+            group_alias: "text:hover",
+            options: {
+              group_name: "tab_title_list",
+              group_title: "Tabs list",
+              selector: " .t4s-tabs-se .t4s-tabs-ul li a",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: [
+                {
+                  position: 1,
+                  fields: {
+                    alias: "text-align",
+                    options: {
+                      label: "Alignment",
+                      css: {
+                        selector: "root .t4s-tabs-se .t4s-tabs-ul li a",
+                      },
+                    },
+                  },
+                },
+                {
+                  position: 10,
+                  fields: [
+                    {
+                      type: "number",
+                      name: "lines_clamp",
+                      label: "Fixed number of lines",
+                      value: 2,
+                      options: {
+                        min: 1,
+                        max: 5,
+                      },
+                      css: {
+                        properties: {
+                          "--ecom-webkit-line-clamp": "",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingNormal",
+                        options: {
+                          visible: (data) => data["tab"] === "normal",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingHover",
+                        options: {
+                          visible: (data) => data["tab"] === "hover",
+                        },
+                        css: {
+                          selector: ":hover",
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          {
+            group_alias: "text:hover",
+            options: {
+              group_name: "product_title",
+              group_title: "Title",
+              selector: " .t4s-product-title a",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: [
+                {
+                  position: 1,
+                  fields: {
+                    alias: "text-align",
+                    options: {
+                      label: "Alignment",
+                      css: {
+                        selector: "root .t4s-product-title",
+                      },
+                    },
+                  },
+                },
+                {
+                  position: 10,
+                  fields: [
+                    {
+                      type: "number",
+                      name: "lines_clamp",
+                      label: "Fixed number of lines",
+                      value: 2,
+                      options: {
+                        min: 1,
+                        max: 5,
+                      },
+                      css: {
+                        properties: {
+                          "--ecom-webkit-line-clamp": "",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingNormal",
+                        options: {
+                          visible: (data) => data["tab"] === "normal",
+                        },
+                      },
+                    },
+                    {
+                      alias: "spacing",
+                      options: {
+                        name: "spacingHover",
+                        options: {
+                          visible: (data) => data["tab"] === "hover",
+                        },
+                        css: {
+                          selector: ":hover",
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price",
+              group_title: "Price",
+              selector: " .t4s-product-price",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+              params: {
+                position: 1,
+                fields: {
+                  alias: "text-align",
+                  options: {
+                    label: "Alignment",
+                    css: {},
+                  },
+                },
+              },
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price_regular",
+              group_title: "Price regular",
+              selector: " .t4s-product-price del",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+            },
+          },
+          {
+            group_alias: "text:spacing",
+            options: {
+              group_name: "product_price_sale",
+              group_title: "Price Sale",
+              selector: " .t4s-product-price ins",
+            },
+            modify: {
+              remove: {
+                index: 0,
+                length: 1,
+              },
+            },
+          }
+        ];
+        return style;
+      }
+    }
+  
+  }
+</script></head><body cz-shortcut-listen="true"></body></html>
