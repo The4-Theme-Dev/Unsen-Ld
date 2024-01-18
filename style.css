@@ -93,6 +93,17 @@
   text-align: center;
   padding: 10px 0;
 }
+.t4s_content_popup_password [is-close]{
+  position: absolute;
+  top: 10px;right: 10px;
+  border-radius: 100%;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  outline: none;
+  z-index: 1;
+
+}
 .t4s_title_popup_password {
   text-align: center;
   font-size: 26px;
@@ -247,7 +258,7 @@ body {
 .t4s_btn_trial {
   background: #0ec0ad;
   position: fixed;
-  bottom: 70px;
+  bottom: 20px;
   left: 50%;
   z-index: 999;
   transform: translateX(-50%);
@@ -3132,7 +3143,7 @@ table .tb-show {
   transform: translate(0);
 }
 .t4s_oveflow {
-  transform: translate(-100);
+  transform: translate(0);
   transition: 0.5s;
 }
 @media (max-width: 767px) {

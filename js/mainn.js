@@ -98,7 +98,7 @@ $(window).resize(function () {
   //install app
   $('.t4s_btn_new_letter').click(function (e) {
     e.preventDefault();
-    window.open(`https://ecomposer.app/install?shop=${$(".t4s_input_new_letter").val()}`, "_blank");
+    window.open(`https://apps.shopify.com/ecomposer?utm_source=unsen&utm_medium=landing-button`, "_blank");
   });
 
   //sticky menu
@@ -130,15 +130,22 @@ $(window).resize(function () {
 
   });
 // password
+
   $('.link_demo_password').click(function (e) {
+    let tm_psss = sessionStorage.getItem('tm_psss');
+    if(tm_psss == 'true'){
+      return;
+    }
+    console.log(tm_psss);
     e.preventDefault();
     var href = $(this).attr('href');
     $('.t4s_popup_password').addClass('visible_password');
     $('.t4s_oveflow').addClass('visible_password');
-    $('.btn_popup_password').attr("href", `${href}`)
+    $('.btn_popup_password').attr("href", `${href}`);
+    sessionStorage.setItem('tm_psss',true);
   });
 
-  $('.t4s_oveflow').click(function (e) {
+  $('.t4s_oveflow, .t4s_content_popup_password [is-close]').click(function (e) {
     e.preventDefault();
     $('.t4s_popup_password').removeClass('visible_password');
     $('.t4s_oveflow').removeClass('visible_password');
