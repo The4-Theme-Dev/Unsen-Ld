@@ -280,7 +280,7 @@ class bannerPopup extends HTMLElement{
     this.style.setProperty('display','flex');
     setTimeout(() => {      
       this.overlay.style.setProperty('opacity','1');
-      document.querySelector('html').style.setProperty('overflow','hidden');
+      // document.querySelector('html').style.setProperty('overflow','hidden');
     }, 300);
     setTimeout(() => {
       this.content.style.setProperty('transform','translate(0,0)');
@@ -292,7 +292,7 @@ class bannerPopup extends HTMLElement{
     this.content.style.setProperty('opacity','0');
     setTimeout(() => {      
       this.overlay.style.setProperty('opacity','0');
-      document.querySelector('html').style.removeProperty('overflow');
+      // document.querySelector('html').style.removeProperty('overflow');
     }, 300);
     setTimeout(() => {
       this.style.setProperty('display','none');
