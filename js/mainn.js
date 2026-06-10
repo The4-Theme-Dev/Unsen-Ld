@@ -208,6 +208,9 @@ class bannerPopup extends HTMLElement{
           opacity: 0;
           transition: .2s ease-in-out;
           cursor: url('./assets/images/cursor-close.svg') 25 25, auto;
+          @media (width > 1150px){
+            display: none;
+          }
         }
         .content{
 
@@ -222,6 +225,9 @@ class bannerPopup extends HTMLElement{
           // aspect-ratio: 1;
           border-radius: 10px;
           overflow:hidden;
+           @media (width > 1150px){
+            width: min(400px, 30vw);
+          }
         }
         button.close{
           position: absolute;
